@@ -191,10 +191,18 @@
     <Compile Include="Migrations\202402050053475_first.designer.cs">
       <DependentUpon>202402050053475_first.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402050302082_rides.cs" />
+    <Compile Include="Migrations\202402050302082_rides.designer.cs">
+      <DependentUpon>202402050302082_rides.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Booking.cs" />
+    <Compile Include="Models\Driver.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Passenger.cs" />
+    <Compile Include="Models\Trip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -303,6 +311,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202402050053475_first.resx">
       <DependentUpon>202402050053475_first.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402050302082_rides.resx">
+      <DependentUpon>202402050302082_rides.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

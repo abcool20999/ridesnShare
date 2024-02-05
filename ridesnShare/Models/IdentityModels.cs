@@ -25,6 +25,19 @@ namespace ridesnShare.Models
         {
         }
 
+        //we are setting the passenger model as a db table
+        public DbSet<Passenger> Passengers { get; set; }
+
+        //we are setting the passenger model as a db table
+        public DbSet<Booking> Bookings { get; set; }
+
+        //we are setting the drivers table
+        public DbSet<Driver> Drivers { get; set; }
+
+        //we are setting the drivers table
+        public DbSet<Trip> Trips { get; set; }
+
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
