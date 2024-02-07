@@ -240,6 +240,7 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="json\passenger.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -285,7 +286,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Passenger\Passenger.cshtml" />
+    <Content Include="Views\Passenger\List.cshtml" />
     <Content Include="Views\Booking\Booking.cshtml" />
     <Content Include="Views\Driver\Driver.cshtml" />
     <Content Include="Views\Trip\Trip.cshtml" />

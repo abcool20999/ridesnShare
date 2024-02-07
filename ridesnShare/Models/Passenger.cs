@@ -20,9 +20,5 @@ namespace ridesnShare.Models
         //a passenger has many bookings
         public ICollection<Booking> Bookings { get; set; }
 
-        public class PassengerDTO
-        {
-
-        }
     }
 }

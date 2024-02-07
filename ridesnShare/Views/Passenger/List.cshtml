@@ -1,0 +1,15 @@
+﻿<!--describing the view-->
+@model IEnumerable <ridesnShare.Models.Passenger> 
+@{
+ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+<!--for each loop that determines the info we wanna render for the passengers-->
+@foreach (var passenger in Model)
+ {
+    <h2>@passenger.firstName</h2>
+    <div>@passenger.lastName</div>
+
+ }
+            
