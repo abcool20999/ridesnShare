@@ -30,9 +30,9 @@ namespace ridesnShare.Controllers
             IEnumerable<Passenger> passengers = response.Content.ReadAsAsync<IEnumerable<Passenger>>().Result;
 
             //we use debug.writeline to test and see if its working
-            Debug.WriteLine("Number of animals received");
+            Debug.WriteLine("Number of passengers received");
             Debug.WriteLine(passengers.Count());
-            //this shows the channel of comm btwn our webserver in our animal controller and the actual animal data controller api as we are communicating through an http request
+            //this shows the channel of comm btwn our webserver in our passenger controller and the actual animal data controller api as we are communicating through an http request
 
             return View(passengers);
         }

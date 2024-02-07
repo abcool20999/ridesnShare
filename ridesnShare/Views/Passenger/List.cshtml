@@ -1,15 +1,27 @@
 ﻿<!--describing the view-->
-@model IEnumerable <ridesnShare.Models.Passenger> 
+@model IEnumerable<ridesnShare.Models.Passenger>
 @{
-ViewBag.Title = "List";
+    ViewBag.Title = "List";
 }
 
-<h2>List</h2>
+<h2>List of Passengers</h2>
 <!--for each loop that determines the info we wanna render for the passengers-->
+
+<a href="Passenger/New">Add a Passenger</a>
+
+
+<form action="" method="">
+    <div>
+        <input type="text" name="PassengerSearchKey" />
+        <input type="submit" value="Search" />
+    </div>
+</form>
+<a href="">Update</a>
+<a href="">Delete</a>
 @foreach (var passenger in Model)
- {
+{
     <h2>@passenger.firstName</h2>
     <div>@passenger.lastName</div>
 
- }
-            
+}
+
