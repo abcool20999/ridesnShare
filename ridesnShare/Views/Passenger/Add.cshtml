@@ -1,7 +1,22 @@
 ﻿
 @{
-    ViewBag.Title = "Add";
+    ViewBag.Title = "AddUser";
 }
 
-<h2>Add</h2>
+<h2>New Passenger</h2>
+<!-- ask the admin for the passenger info-->
+<form action="/Passenger/AddUser" method="POST">
+    <div>
+        <label>firstName:</label><input type="text" name="firstName" />
+    </div>
+    <div>
+        <label>lastName:</label><input type="text" name="lastName" />
+    </div>
+    <div>
+        <label>email:</label><input type="text" name="email" />
+    </div>
+    <div>
+        <input type="submit" value="Add Passenger" />
+    </div>
+</form>
 

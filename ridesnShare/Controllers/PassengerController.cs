@@ -6,20 +6,29 @@ using System.Web.Mvc;
 using System.Net.Http;
 using System.Diagnostics;
 using ridesnShare.Models;
+using System.Web.Script.Serialization;
 
 namespace ridesnShare.Controllers
 {
     public class PassengerController : Controller
     {
+        private static readonly HttpClient client;
+        private JavaScriptSerializer jss = new JavaScriptSerializer();
+
+        static PassengerController()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:44354/api/PassengerData/");
+        }
         // GET: Passenger/List
         public ActionResult List()
         {
             //objective is to communicate with my Passenger data api to retrieve a list of passengers.
             //curl https://localhost:44354/api/PassengerData/ListPassengers
 
-            HttpClient client = new HttpClient() { };
+            
             //Establish url connection endpoint i.e client sends info and anticipates a response
-            string url = " https://localhost:44354/api/PassengerData/ListPassengers";
+            string url = "ListPassengers";
             HttpResponseMessage response = client.GetAsync(url).Result;
             //this enables see if our httpclient is communicating with our data access endpoint 
 
@@ -32,7 +41,7 @@ namespace ridesnShare.Controllers
             //we use debug.writeline to test and see if its working
             Debug.WriteLine("Number of passengers received");
             Debug.WriteLine(passengers.Count());
-            //this shows the channel of comm btwn our webserver in our passenger controller and the actual animal data controller api as we are communicating through an http request
+            //this shows the channel of comm btwn our webserver in our passenger controller and the actual passenger data controller api as we are communicating through an http request
 
             return View(passengers);
         }
@@ -40,28 +49,73 @@ namespace ridesnShare.Controllers
         // GET: Passenger/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            //objective is to communicate with my Passenger data api to retrieve one passenger.
+            //curl https://localhost:44354/api/PassengerData/FindPassenger/id
+
+
+            //Establish url connection endpoint i.e client sends info and anticipates a response
+            string url = "FindPassenger/"+id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            //this enables see if our httpclient is communicating with our data access endpoint 
+
+            Debug.WriteLine("The response code is");
+            Debug.WriteLine(response.StatusCode);
+
+            //objective is to parse the content of the response message into an object of type passenger.
+            PassengerDTO selectedpassenger = response.Content.ReadAsAsync<PassengerDTO>().Result;
+
+            //we use debug.writeline to test and see if its working
+            Debug.WriteLine("passenger received");
+            Debug.WriteLine(selectedpassenger.firstName);
+            //this shows the channel of comm btwn our webserver in our passenger controller and the actual passenger data controller api as we are communicating through an http request
+            
+            return View(selectedpassenger);
         }
 
-        // GET: Passenger/Create
-        public ActionResult Create()
+        public ActionResult Error()
         {
             return View();
         }
 
-        // POST: Passenger/Create
+        // GET: Passenger/Add
+        public ActionResult Add()
+        {
+            return View();
+        }
+
+        // POST: Passenger/AddUser
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult AddUser(Passenger passenger)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            Debug.WriteLine("the inputted passenger name is :");
+            Debug.WriteLine(passenger.firstName);
+            //objective: add a new passenger into our system using the API
+            //curl -H "Content-Type:application/json" -d @passenger.json  https://localhost:44354/api/PassengerData/AddPassenger
+            string url = "addpassenger";
 
-                return RedirectToAction("Index");
-            }
-            catch
+            //convert passenger object into a json format to then send to our api
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            string jsonpayload = jss.Serialize(passenger);
+
+            Debug.WriteLine(jsonpayload);
+
+            //send the json payload to the url through the use of our client
+            //setup the postdata as HttpContent variable content
+            HttpContent content = new StringContent(jsonpayload);
+
+            //configure a header for our client to specify the content type of app for post 
+            content.Headers.ContentType.MediaType = "application/json";
+
+            //check if you can access information from our postasync request, get an httpresponse request and result of the request
+
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+            if (response.IsSuccessStatusCode)
             {
-                return View();
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("Errors");
             }
         }
 

@@ -18,27 +18,47 @@ namespace ridesnShare.Controllers
 
         // GET: api/PassengerData/ListPassengers
         [HttpGet]
-        public IQueryable<Passenger> ListPassengers()
+        public IEnumerable<PassengerDTO> ListPassengers()
         {
-            return db.Passengers;
+            List<Passenger> Passengers = db.Passengers.ToList();
+            List<PassengerDTO> PassengerDTOs = new List<PassengerDTO>();
+
+            Passengers.ForEach(p => PassengerDTOs.Add(new PassengerDTO()
+            {
+                passengerId = p.passengerId,
+                firstName = p.firstName,
+                lastName = p.lastName,
+                email = p.email
+            }));
+
+            return PassengerDTOs;     
+
         }
 
-        // GET: api/PassengerData/FindPassenger/5
+        // GET: api/PassengerData/FindPassenger/{id}
 
         [ResponseType(typeof(Passenger))]
         [HttpGet]
         public IHttpActionResult FindPassenger(int id)
         {
             Passenger passenger = db.Passengers.Find(id);
+            PassengerDTO passengerDTO = new PassengerDTO()
+            {
+                passengerId = passenger.passengerId,
+                firstName = passenger.firstName,
+                lastName = passenger.lastName,
+                email = passenger.email
+            };
+
             if (passenger == null)
             {
                 return NotFound();
             }
 
-            return Ok(passenger);
+            return Ok(passengerDTO);
         }
 
-        // PUT: api/PassengerData/UpdatePassenger/5
+        // POST: api/PassengerData/UpdatePassenger/5
         [ResponseType(typeof(void))]
         [HttpPost]
         public IHttpActionResult UpdatePassenger(int id, Passenger passenger)
@@ -104,7 +124,7 @@ namespace ridesnShare.Controllers
             db.Passengers.Remove(passenger);
             db.SaveChanges();
 
-            return Ok(passenger);
+            return Ok();
         }
 
         protected override void Dispose(bool disposing)
