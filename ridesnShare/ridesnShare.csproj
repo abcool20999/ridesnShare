@@ -290,7 +290,7 @@
     <Content Include="Views\Booking\Booking.cshtml" />
     <Content Include="Views\Driver\Driver.cshtml" />
     <Content Include="Views\Trip\Trip.cshtml" />
-    <Content Include="Views\Passenger\Update.cshtml" />
+    <Content Include="Views\Passenger\Edit.cshtml" />
     <Content Include="Views\Passenger\Add.cshtml" />
     <Content Include="Views\Passenger\Delete.cshtml" />
     <Content Include="Views\Passenger\Details.cshtml" />

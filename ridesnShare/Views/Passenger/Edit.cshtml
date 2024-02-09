@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Update";
+}
+
+<h2>Update</h2>
+<!-- ask the admin for the passenger info-->
+<form action="/Passenger/Update" method="POST">
+    <div>
+        <label>firstName:</label><input type="text" name="firstName" />
+    </div>
+    <div>
+        <label>lastName:</label><input type="text" name="lastName" />
+    </div>
+    <div>
+        <label>email:</label><input type="text" name="email" />
+    </div>
+    <div>
+        <input type="submit" value="Add Passenger" />
+    </div>
+</form>
