@@ -27,11 +27,11 @@ namespace ridesnShare.Controllers
             //objective is to communicate with my Passenger data api to retrieve a list of passengers.
             //curl https://localhost:44354/api/PassengerData/ListPassengers
 
-            
+
             //Establish url connection endpoint i.e client sends info and anticipates a response
             string url = "ListPassengers";
             HttpResponseMessage response = client.GetAsync(url).Result;
-            //this enables see if our httpclient is communicating with our data access endpoint 
+            //this enables us see if our httpclient is communicating with our data access endpoint 
 
             Debug.WriteLine("The response code is");
             Debug.WriteLine(response.StatusCode);
@@ -55,7 +55,7 @@ namespace ridesnShare.Controllers
 
 
             //Establish url connection endpoint i.e client sends info and anticipates a response
-            string url = "FindPassenger/"+id;
+            string url = "FindPassenger/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             //this enables see if our httpclient is communicating with our data access endpoint 
 
@@ -69,7 +69,7 @@ namespace ridesnShare.Controllers
             Debug.WriteLine("passenger received");
             Debug.WriteLine(selectedpassenger.firstName);
             //this shows the channel of comm btwn our webserver in our passenger controller and the actual passenger data controller api as we are communicating through an http request
-            
+
             return View(selectedpassenger);
         }
 
@@ -126,19 +126,20 @@ namespace ridesnShare.Controllers
            string url = "FindPassenger/" + id;
            HttpResponseMessage response = client.GetAsync(url).Result;
            PassengerDTO selectedanimal = response.Content.ReadAsAsync<PassengerDTO>().Result;
-           return View(selectedanimal); ;
+           return View(selectedanimal);
         }
 
+      
         // POST: Passenger/Update/5
         [HttpPost]
         public ActionResult Update(int id, Passenger passenger)
         {
-            string url = "updatepassenger/" + id;
+            string url = "UpdatePassenger/" + id;
             string jsonpayload = jss.Serialize(passenger);
             HttpContent content = new StringContent(jsonpayload);
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
-            Debug.WriteLine(content);
+            Debug.WriteLine("List"+response);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("List");

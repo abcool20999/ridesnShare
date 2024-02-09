@@ -4,10 +4,9 @@
     ViewBag.Title = "List";
 }
 
-<h2>List of Passengers</h2>
+<!--<h2>List of Passengers</h2>-->
 <!--for each loop that determines the info we wanna render for the passengers-->
-
-<a href="/Passenger/Add">Add a Passenger</a>
+<!--<a href="/Passenger/Add">Add a Passenger</a>
 
 
 <form action="" method="GET">
@@ -23,5 +22,54 @@
     <h2>@passenger.firstName</h2>
     <div>@passenger.lastName</div>
 
-}
+}-->
+
+
+<div class="sidebar">
+    <h2 class="sbc">RideShare</h2>
+    <div class="sbc"><a href="">Passengers</a></div>
+    <div class="sbc"><a href="">Drivers</a></div>
+    <div class="sbc"><a href="">Bookings</a></div>
+</div>
+
+<div class="cnt">
+    <div>
+        <h2>List of Passengers</h2>
+        <!--for each loop that determines the info we wanna render for the passengers-->
+
+        <a href="Passenger/New">Add a Passenger</a>
+
+
+        <form action="" method="GET">
+            <div>
+                <input class="input" type="text" name="PassengerSearchKey" />
+                <input class="submit" type="submit" value="Search" />
+            </div>
+        </form>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <td><b>FirstName</b></td>
+                <td><b>LastName</b></td>
+                <td><b>Update</b></td>
+                <td><b>Delete</b></td>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var passenger in Model)
+            {
+                <tr>
+                    <td>@passenger.firstName</td>
+                    <td>@passenger.lastName</td>
+                    <td><a class="mbtn update" href="/Passenger/Edit/@passenger.passengerId">Update</a></td>
+                    <td><a class="mbtn delete" href="">Delete</a></td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+</div>
 

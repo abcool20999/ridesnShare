@@ -1,21 +1,28 @@
-﻿
+﻿@model ridesnShare.Models.Passenger
+
 @{
-    ViewBag.Title = "Update";
+    ViewBag.Title = "Update Passenger";
 }
 
-<h2>Update</h2>
-<!-- ask the admin for the passenger info-->
-<form action="/Passenger/Update" method="POST">
+<h2>Update Passenger</h2>
+
+<form action="/Passenger/Update" method="post">
+    <!-- Add a hidden input field for the id -->
+    <input type="hidden" name="id" value="@Model.passengerId" />
+
     <div>
-        <label>firstName:</label><input type="text" name="firstName" />
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" value="@Model.firstName" />
     </div>
     <div>
-        <label>lastName:</label><input type="text" name="lastName" />
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" value="@Model.lastName" />
     </div>
     <div>
-        <label>email:</label><input type="text" name="email" />
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" value="@Model.email" />
     </div>
     <div>
-        <input type="submit" value="Add Passenger" />
+        <input type="submit" value="Update Passenger" />
     </div>
 </form>
