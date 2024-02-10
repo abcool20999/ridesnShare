@@ -15,16 +15,37 @@ namespace ridesnShare.Controllers
     public class DriverDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: api/DriverData
-        public IQueryable<Driver> GetDrivers()
+        /// <summary>
+        /// Retrieves a list of drivers from the database.
+        /// </summary>
+        /// <returns>
+        /// An IEnumerable of DriverDTO objects representing the list of drivers.
+        /// </returns>
+        /// <example>
+        /// GET: api/DriverData/ListDrivers
+        /// </example>
+        [HttpGet]
+        [Route("api/DriverData/ListDrivers")]
+        public IEnumerable<DriverDTO> Drivers()
         {
-            return db.Drivers;
+            List<Driver> Drivers = db.Drivers.ToList();
+            List<DriverDTO> DriverDTOs = new List<DriverDTO>();
+
+            Drivers.ForEach(d => DriverDTOs.Add(new DriverDTO()
+            {
+                DriverId = d.DriverId,
+                firstName = d.firstName,
+                lastName = d.lastName,
+                email = d.email
+            }));
+
+            return DriverDTOs;
+
         }
 
         // GET: api/DriverData/5
         [ResponseType(typeof(Driver))]
-        public IHttpActionResult GetDriver(int id)
+        public IHttpActionResult FindDriver(int id)
         {
             Driver driver = db.Drivers.Find(id);
             if (driver == null)
@@ -37,7 +58,7 @@ namespace ridesnShare.Controllers
 
         // PUT: api/DriverData/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutDriver(int id, Driver driver)
+        public IHttpActionResult UpdateDriver(int id, Driver driver)
         {
             if (!ModelState.IsValid)
             {
@@ -70,9 +91,19 @@ namespace ridesnShare.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/DriverData
+        /// <summary>
+        /// Adds a new driver to the database.
+        /// </summary>
+        /// <param name="driver">The driver object containing information about the new driver.</param>
+        /// <returns>
+        /// An IHttpActionResult indicating the result of the addition operation.
+        /// </returns>
+        /// <example>
+        /// POST: api/DriverData/AddDriver/5
+        /// </example>
         [ResponseType(typeof(Driver))]
-        public IHttpActionResult PostDriver(Driver driver)
+        [HttpPost]
+        public IHttpActionResult AddDriver(Driver driver)
         {
             if (!ModelState.IsValid)
             {

@@ -1,7 +1,56 @@
-﻿
+﻿<!--describing the view-->
+@model IEnumerable<ridesnShare.Models.DriverDTO>
 @{
     ViewBag.Title = "Driver";
 }
 
-<h2>List of Drivers</h2>
+<div class="sidebar">
+    <h2 class="sbc">RideShare</h2>
+    <div class="sbc"><a href="/Passenger/List">Passengers</a></div>
+    <div class="sbc"><a href="/Driver/List">Drivers</a></div>
+    <div class="sbc"><a href="">Bookings</a></div>
+    <div class="sbc"><a href="">Trips</a></div>
+</div>
+
+<div class="cnt">
+    <div>
+        <h2>List of Drivers</h2>
+        <!--for each loop that determines the info we wanna render for the passengers-->
+
+        <a href="/Passenger/Add">Add a Driver</a>
+
+
+        <form action="" method="GET">
+            <div>
+                <input class="input" type="text" name="DriverSearchKey" />
+                <input class="submit" type="submit" value="Search" />
+            </div>
+        </form>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <td><b>FirstName</b></td>
+                <td><b>LastName</b></td>
+                <td><b>Update</b></td>
+                <td><b>Delete</b></td>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var driver in Model)
+            {
+                <tr>
+                    <td>@driver.firstName</td>
+                    <td>@driver.lastName</td>
+                    <td><a class="mbtn update" href="/Passenger/Edit/@driver.DriverId">Update</a></td>
+                    <td><a class="mbtn delete" href="/Passenger/DeleteConfirm/@driver.DriverId">Delete</a></td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+</div>
+
 
