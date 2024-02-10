@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -65,11 +66,17 @@ namespace ridesnShare.Controllers
         {
             if (!ModelState.IsValid)
             {
+                Debug.WriteLine("Model State is invalid");
                 return BadRequest(ModelState);
             }
 
-            if (id != passenger.passengerId)
+            if (id == default)
             {
+                Debug.WriteLine("ID mismatch");
+                Debug.WriteLine("GET parameter" + id);
+                Debug.WriteLine("POST parameter" + passenger.passengerId);
+                Debug.WriteLine("POST parameter" + passenger.firstName);
+                Debug.WriteLine("POST parameter" + passenger.lastName);
                 return BadRequest();
             }
 
@@ -83,6 +90,7 @@ namespace ridesnShare.Controllers
             {
                 if (!PassengerExists(id))
                 {
+                    Debug.WriteLine("Passenger not found");
                     return NotFound();
                 }
                 else

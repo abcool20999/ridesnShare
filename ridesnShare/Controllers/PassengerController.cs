@@ -8,6 +8,9 @@ using System.Diagnostics;
 using ridesnShare.Models;
 using System.Web.Script.Serialization;
 using System.Net.NetworkInformation;
+using System.Data.Entity.Migrations.Model;
+
+
 
 namespace ridesnShare.Controllers
 {
@@ -37,7 +40,7 @@ namespace ridesnShare.Controllers
             Debug.WriteLine(response.StatusCode);
 
             //objective is to parse the content of the response message into an IEnumerable of type passenger.
-            IEnumerable<Passenger> passengers = response.Content.ReadAsAsync<IEnumerable<Passenger>>().Result;
+            IEnumerable<PassengerDTO> passengers = response.Content.ReadAsAsync<IEnumerable<PassengerDTO>>().Result;
 
             //we use debug.writeline to test and see if its working
             Debug.WriteLine("Number of passengers received");
@@ -55,7 +58,7 @@ namespace ridesnShare.Controllers
 
 
             //Establish url connection endpoint i.e client sends info and anticipates a response
-            string url = "FindPassenger/" + id;
+            string url = "FindPassenger/"+id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             //this enables see if our httpclient is communicating with our data access endpoint 
 
@@ -123,10 +126,11 @@ namespace ridesnShare.Controllers
         // GET: Passenger/Edit/5
         public ActionResult Edit(int id)
         {
+           
            string url = "FindPassenger/" + id;
            HttpResponseMessage response = client.GetAsync(url).Result;
-           PassengerDTO selectedanimal = response.Content.ReadAsAsync<PassengerDTO>().Result;
-           return View(selectedanimal);
+           PassengerDTO selectedpassenger = response.Content.ReadAsAsync<PassengerDTO>().Result;
+           return View(selectedpassenger);
         }
 
       
@@ -134,12 +138,13 @@ namespace ridesnShare.Controllers
         [HttpPost]
         public ActionResult Update(int id, Passenger passenger)
         {
+            passenger.passengerId = id;
             string url = "UpdatePassenger/" + id;
             string jsonpayload = jss.Serialize(passenger);
             HttpContent content = new StringContent(jsonpayload);
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
-            Debug.WriteLine("List"+response);
+            Debug.WriteLine(content);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("List");

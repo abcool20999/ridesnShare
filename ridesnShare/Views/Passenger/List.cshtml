@@ -1,5 +1,5 @@
 ﻿<!--describing the view-->
-@model IEnumerable<ridesnShare.Models.Passenger>
+@model IEnumerable<ridesnShare.Models.PassengerDTO>
 @{
     ViewBag.Title = "List";
 }
@@ -37,7 +37,7 @@
         <h2>List of Passengers</h2>
         <!--for each loop that determines the info we wanna render for the passengers-->
 
-        <a href="Passenger/New">Add a Passenger</a>
+        <a href="/Passenger/Add">Add a Passenger</a>
 
 
         <form action="" method="GET">

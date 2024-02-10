@@ -1,5 +1,115 @@
-{
-  "firstName": "Tammy",
-  "lastName": "Abraham",
-  "email": "abcooltest@gmail.com"
-}
+
+////curl -H "Content-Type:application/json" -d @passenger.json https://localhost:44354/api/PassengerData/AddPassenger
+
+
+[
+  {
+    "firstName": "Tammy",
+    "lastName": "Abraham",
+    "email": "abcooltest@gmail.com"
+  },
+
+
+  {
+    "firstName": "Tammy",
+    "lastName": "Abraham",
+    "email": "abcooltest@gmail.com"
+  },
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "johndoe@example.com"
+  },
+  {
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "email": "janesmith@example.com"
+  },
+  {
+    "firstName": "Michael",
+    "lastName": "Johnson",
+    "email": "mjohnson@example.com"
+  },
+  {
+    "firstName": "Sarah",
+    "lastName": "Jones",
+    "email": "sarahjones@example.com"
+  },
+  {
+    "firstName": "David",
+    "lastName": "Brown",
+    "email": "dbrown@example.com"
+  },
+  {
+    "firstName": "Emily",
+    "lastName": "Wilson",
+    "email": "ewilson@example.com"
+  },
+  {
+    "firstName": "Matthew",
+    "lastName": "Taylor",
+    "email": "mtaylor@example.com"
+  },
+  {
+    "firstName": "Olivia",
+    "lastName": "Martinez",
+    "email": "omartinez@example.com"
+  },
+  {
+    "firstName": "Daniel",
+    "lastName": "Anderson",
+    "email": "danderson@example.com"
+  },
+  {
+    "firstName": "Ava",
+    "lastName": "Garcia",
+    "email": "avagarcia@example.com"
+  },
+  {
+    "firstName": "James",
+    "lastName": "Rodriguez",
+    "email": "jrodriguez@example.com"
+  },
+  {
+    "firstName": "Isabella",
+    "lastName": "Hernandez",
+    "email": "ihernandez@example.com"
+  },
+  {
+    "firstName": "William",
+    "lastName": "Lopez",
+    "email": "wlopez@example.com"
+  },
+  {
+    "firstName": "Sophia",
+    "lastName": "Lee",
+    "email": "sle@example.com"
+  },
+  {
+    "firstName": "Logan",
+    "lastName": "Lewis",
+    "email": "llewis@example.com"
+  },
+  {
+    "firstName": "Mia",
+    "lastName": "Walker",
+    "email": "miawalker@example.com"
+  },
+  {
+    "firstName": "Benjamin",
+    "lastName": "Parker",
+    "email": "bparker@example.com"
+  },
+  {
+    "firstName": "Ella",
+    "lastName": "Young",
+    "email": "eyoung@example.com"
+  },
+  {
+    "firstName": "Jacob",
+    "lastName": "Thomas",
+    "email": "jthomas@example.com"
+  }
+
+
+]
