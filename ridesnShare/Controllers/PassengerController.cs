@@ -81,7 +81,6 @@ namespace ridesnShare.Controllers
             return View();
         }
 
-        // GET: Passenger/Add
         public ActionResult Add()
         {
             return View();
@@ -126,34 +125,57 @@ namespace ridesnShare.Controllers
         // GET: Passenger/Edit/5
         public ActionResult Edit(int id)
         {
-           
-           string url = "FindPassenger/" + id;
-           HttpResponseMessage response = client.GetAsync(url).Result;
-           PassengerDTO selectedpassenger = response.Content.ReadAsAsync<PassengerDTO>().Result;
-           return View(selectedpassenger);
+            // Construct the URL to find the passenger with the given ID
+            string url = "FindPassenger/" + id;
+
+            // Send a GET request to retrieve the passenger information from the API
+            HttpResponseMessage response = client.GetAsync(url).Result;
+
+            // Deserialize the response content into a PassengerDTO object
+            PassengerDTO selectedpassenger = response.Content.ReadAsAsync<PassengerDTO>().Result;
+
+            // Return the View with the selected passenger data
+            return View(selectedpassenger);
         }
 
-      
         // POST: Passenger/Update/5
         [HttpPost]
         public ActionResult Update(int id, Passenger passenger)
         {
+            // Set the passenger ID to match the ID in the route
             passenger.passengerId = id;
+
+            // Construct the URL to update the passenger with the given ID
             string url = "UpdatePassenger/" + id;
+
+            // Serialize the passenger object into JSON payload
             string jsonpayload = jss.Serialize(passenger);
+
+            // Create HTTP content with JSON payload
             HttpContent content = new StringContent(jsonpayload);
+
+            // Set the content type of the HTTP request to JSON
             content.Headers.ContentType.MediaType = "application/json";
+
+            // Send a POST request to update the passenger information
             HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            // Log the content of the request
             Debug.WriteLine(content);
+
+            // Check if the request was successful
             if (response.IsSuccessStatusCode)
             {
+                // Redirect to the List action if the update was successful
                 return RedirectToAction("List");
             }
             else
             {
+                // Redirect to the Error action if there was an error during the update
                 return RedirectToAction("Error");
             }
         }
+
 
         // GET: Passenger/Delete/5
         public ActionResult DeleteConfirm(int id)
@@ -169,7 +191,7 @@ namespace ridesnShare.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            string url = "deletepassenger/" + id;
+            string url = "DeletePassenger/" + id;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;

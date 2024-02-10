@@ -16,9 +16,17 @@ namespace ridesnShare.Controllers
     public class PassengerDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: api/PassengerData/ListPassengers
+        /// <summary>
+        /// Retrieves a list of passengers from the database.
+        /// </summary>
+        /// <returns>
+        /// An IEnumerable of PassengerDTO objects representing the list of passengers.
+        /// </returns>
+        /// <example>
+        /// GET: api/PassengerData/ListPassengers
+        /// </example>
         [HttpGet]
+        [Route("api/PassengerData/ListPassengers")]
         public IEnumerable<PassengerDTO> ListPassengers()
         {
             List<Passenger> Passengers = db.Passengers.ToList();
@@ -35,11 +43,20 @@ namespace ridesnShare.Controllers
             return PassengerDTOs;     
 
         }
-
-        // GET: api/PassengerData/FindPassenger/{id}
-
+        /// <summary>
+        /// Retrieves information about a specific passenger from the database.
+        /// </summary>
+        /// <param name="id">The ID of the passenger to retrieve.</param>
+        /// <returns>
+        /// An IHttpActionResult containing information about the passenger.
+        /// </returns>
+        /// <example>
+        /// GET: api/PassengerData/FindPassenger/{id}
+        /// </example>
+      
         [ResponseType(typeof(Passenger))]
         [HttpGet]
+        [Route("api/PassengerData/FindPassenger/{id}")]
         public IHttpActionResult FindPassenger(int id)
         {
             Passenger passenger = db.Passengers.Find(id);
@@ -58,10 +75,20 @@ namespace ridesnShare.Controllers
 
             return Ok(passengerDTO);
         }
-
-        // POST: api/PassengerData/UpdatePassenger/5
+        /// <summary>
+        /// Updates information about a specific passenger in the database.
+        /// </summary>
+        /// <param name="id">The ID of the passenger to update.</param>
+        /// <param name="passenger">The updated information of the passenger.</param>
+        /// <returns>
+        /// An IHttpActionResult indicating the result of the update operation.
+        /// </returns>
+        /// <example>
+        /// POST: api/PassengerData/UpdatePassenger/5
+        /// </example>
         [ResponseType(typeof(void))]
         [HttpPost]
+        [Route("api/PassengerData/UpdatePassenger/{id}")]
         public IHttpActionResult UpdatePassenger(int id, Passenger passenger)
         {
             if (!ModelState.IsValid)
@@ -102,7 +129,16 @@ namespace ridesnShare.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/PassengerData/AddPassenger
+        /// <summary>
+        /// Adds a new passenger to the database.
+        /// </summary>
+        /// <param name="passenger">The passenger object containing information about the new passenger.</param>
+        /// <returns>
+        /// An IHttpActionResult indicating the result of the addition operation.
+        /// </returns>
+        /// <example>
+        /// POST: api/PassengerData/AddPassenger/5
+        /// </example>
         [ResponseType(typeof(Passenger))]
         [HttpPost]
         public IHttpActionResult AddPassenger(Passenger passenger)
@@ -117,10 +153,20 @@ namespace ridesnShare.Controllers
 
             return CreatedAtRoute("DefaultApi", new { id = passenger.passengerId }, passenger);
         }
+        /// <summary>
+        /// Deletes a passenger from the database.
+        /// </summary>
+        /// <param name="id">The ID of the passenger to delete.</param>
+        /// <returns>
+        /// An IHttpActionResult indicating the result of the deletion operation.
+        /// </returns>
+        /// <example>
+        /// POST: api/PassengerData/DeletePassenger/5
+        /// </example>
 
-        // DELETE: api/PassengerData/DeletePassenger/5
         [ResponseType(typeof(Passenger))]
         [HttpPost]
+        [Route("api/PassengerData/DeletePassenger/{id}")]
         public IHttpActionResult DeletePassenger(int id)
         {
             Passenger passenger = db.Passengers.Find(id);
