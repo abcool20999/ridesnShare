@@ -94,7 +94,7 @@ namespace ridesnShare.Controllers
             Debug.WriteLine(trip.price);
             //objective: add a new trip into our system using the API
             //curl -H "Content-Type:application/json" -d @trip.json  https://localhost:44354/api/TripData/AddTrip
-            string url = "addingTrip";
+            string url = "AddTrip";
 
             //convert trip object into a json format to then send to our api
             JavaScriptSerializer jss = new JavaScriptSerializer();
