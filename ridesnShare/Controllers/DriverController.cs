@@ -46,20 +46,30 @@ namespace ridesnShare.Controllers
             return View(drivers);
         }
 
-        // POST: Driver/Create
-        [HttpPost]
-        public ActionResult Details(FormCollection collection)
+        // GET: Driver/Details/5
+        public ActionResult Details(int id)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            //objective is to communicate with my Driver data api to retrieve one driver.
+            //curl https://localhost:44354/api/DriverData/FindDriver/id
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+
+            //Establish url connection endpoint i.e client sends info and anticipates a response
+            string url = "FindDriver/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            //this enables me see if my httpclient is communicating with the data access endpoint 
+
+            Debug.WriteLine("The response code is");
+            Debug.WriteLine(response.StatusCode);
+
+            //objective is to parse the content of the response message into an object of type driver.
+            DriverDTO selecteddriver = response.Content.ReadAsAsync<DriverDTO>().Result;
+
+            //we use debug.writeline to test and see if its working
+            Debug.WriteLine("driver received");
+            Debug.WriteLine(selecteddriver.firstName);
+            //this shows the channel of comm btwn our webserver in my driver controller and the actual driver data controller api as we are communicating through an http request
+
+            return View(selecteddriver);
         }
 
         // GET: Driver/Edit/5
@@ -68,28 +78,28 @@ namespace ridesnShare.Controllers
             return View();
         }
 
-        // POST: Driver/Edit/5
-        [HttpPost]
-        public ActionResult Add(int id, FormCollection collection)
+        // POST: Driver/Add
+    
+        public ActionResult Add()
         {
-            {
-                return View();
-            }
+            
+          return View();
+            
         }
 
-        // POST: Passenger/AddUser
+        // POST: Driver/AddUser
         [HttpPost]
-        public ActionResult AddUser(Passenger passenger)
+        public ActionResult AddUser(Driver driver)
         {
-            Debug.WriteLine("the inputted passenger name is :");
-            Debug.WriteLine(passenger.firstName);
-            //objective: add a new passenger into our system using the API
-            //curl -H "Content-Type:application/json" -d @passenger.json  https://localhost:44354/api/PassengerData/AddPassenger
-            string url = "addpassenger";
+            Debug.WriteLine("the inputted driver name is :");
+            Debug.WriteLine(driver.firstName);
+            //objective: add a new driver into our system using the API
+            //curl -H "Content-Type:application/json" -d @driver.json  https://localhost:44354/api/DriverData/AddDriver
+            string url = "addDriver";
 
-            //convert passenger object into a json format to then send to our api
+            //convert driver object into a json format to then send to our api
             JavaScriptSerializer jss = new JavaScriptSerializer();
-            string jsonpayload = jss.Serialize(passenger);
+            string jsonpayload = jss.Serialize(driver);
 
             Debug.WriteLine(jsonpayload);
 
@@ -113,19 +123,87 @@ namespace ridesnShare.Controllers
             }
         }
 
+        // GET: Driver/Edit/5
+        public ActionResult Edit(int id)
+        {
+            // Construct the URL to find the driver with the given ID
+            string url = "FindDriver/" + id;
+
+            // Send a GET request to retrieve the driver information from the API
+            HttpResponseMessage response = client.GetAsync(url).Result;
+
+            // Deserialize the response content into a DriverDTO object
+            DriverDTO selecteddriver = response.Content.ReadAsAsync<DriverDTO>().Result;
+
+            // Return the View with the selected driver data
+            return View(selecteddriver);
+        }
+
+        // POST: Driver/Update/5
+        [HttpPost]
+        public ActionResult Update(int id, Driver driver)
+        {
+            // Set the driver ID to match the ID in the route
+            driver.DriverId = id;
+
+            // Construct the URL to update the driver with the given ID
+            string url = "UpdateDriver/" + id;
+
+            // Serialize the driver object into JSON payload
+            string jsonpayload = jss.Serialize(driver);
+
+            // Create HTTP content with JSON payload
+            HttpContent content = new StringContent(jsonpayload);
+
+            // Set the content type of the HTTP request to JSON
+            content.Headers.ContentType.MediaType = "application/json";
+
+            // Send a POST request to update the passenger information
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            // Log the content of the request
+            Debug.WriteLine(content);
+
+            // Check if the request was successful
+            if (response.IsSuccessStatusCode)
+            {
+                // Redirect to the List action if the update was successful
+                return RedirectToAction("List");
+            }
+            else
+            {
+                // Redirect to the Error action if there was an error during the update
+                return RedirectToAction("Error");
+            }
+        }
+
+
+        // GET: Driver/Delete/5
+        public ActionResult DeleteConfirm(int id)
+        {
+            string url = "FindDriver/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            DriverDTO selecteddriver = response.Content.ReadAsAsync<DriverDTO>().Result;
+            return View(selecteddriver);
+
+        }
+
         // POST: Driver/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            string url = "DeleteDriver/" + id;
+            HttpContent content = new StringContent("");
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
 
-                return RedirectToAction("Index");
-            }
-            catch
+            if (response.IsSuccessStatusCode)
             {
-                return View();
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("Error");
             }
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -42,31 +43,68 @@ namespace ridesnShare.Controllers
             return DriverDTOs;
 
         }
+        /// <summary>
+        /// Retrieves information about a specific driver from the database.
+        /// </summary>
+        /// <param name="id">The ID of the driver to retrieve.</param>
+        /// <returns>
+        /// An IHttpActionResult containing information about the driver.
+        /// </returns>
+        /// <example>
+        /// GET: api/DriverData/FindDriver/{id}
+        /// </example>
 
-        // GET: api/DriverData/5
         [ResponseType(typeof(Driver))]
+        [HttpGet]
+        [Route("api/DriverData/FindDriver/{id}")]
         public IHttpActionResult FindDriver(int id)
         {
             Driver driver = db.Drivers.Find(id);
+            DriverDTO driverDTO = new DriverDTO()
+            {
+                DriverId = driver.DriverId,
+                firstName = driver.firstName,
+                lastName = driver.lastName,
+                email = driver.email
+            };
+
             if (driver == null)
             {
                 return NotFound();
             }
 
-            return Ok(driver);
+            return Ok(driverDTO);
         }
 
-        // PUT: api/DriverData/5
+        /// <summary>
+        /// Updates information about a specific driver in the database.
+        /// </summary>
+        /// <param name="id">The ID of the driver to update.</param>
+        /// <param name="driver">The updated information of the driver.</param>
+        /// <returns>
+        /// An IHttpActionResult indicating the result of the update operation.
+        /// </returns>
+        /// <example>
+        /// POST: api/DriverData/UpdateDriver/5
+        /// </example>
         [ResponseType(typeof(void))]
+        [HttpPost]
+        [Route("api/DriverData/UpdateDriver/{id}")]
         public IHttpActionResult UpdateDriver(int id, Driver driver)
         {
             if (!ModelState.IsValid)
             {
+                Debug.WriteLine("Model State is invalid");
                 return BadRequest(ModelState);
             }
 
-            if (id != driver.DriverId)
+            if (id == default)
             {
+                Debug.WriteLine("ID mismatch");
+                Debug.WriteLine("GET parameter" + id);
+                Debug.WriteLine("POST parameter" + driver.DriverId);
+                Debug.WriteLine("POST parameter" + driver.firstName);
+                Debug.WriteLine("POST parameter" + driver.lastName);
                 return BadRequest();
             }
 
@@ -80,6 +118,7 @@ namespace ridesnShare.Controllers
             {
                 if (!DriverExists(id))
                 {
+                    Debug.WriteLine("Driver not found");
                     return NotFound();
                 }
                 else
@@ -116,8 +155,20 @@ namespace ridesnShare.Controllers
             return CreatedAtRoute("DefaultApi", new { id = driver.DriverId }, driver);
         }
 
-        // DELETE: api/DriverData/5
+        /// <summary>
+        /// Deletes a driver from the database.
+        /// </summary>
+        /// <param name="id">The ID of the driver to delete.</param>
+        /// <returns>
+        /// An IHttpActionResult indicating the result of the deletion operation.
+        /// </returns>
+        /// <example>
+        /// POST: api/DriverData/DeleteDriver/5
+        /// </example>
+
         [ResponseType(typeof(Driver))]
+        [HttpPost]
+        [Route("api/DriverData/DeleteDriver/{id}")]
         public IHttpActionResult DeleteDriver(int id)
         {
             Driver driver = db.Drivers.Find(id);
@@ -129,7 +180,7 @@ namespace ridesnShare.Controllers
             db.Drivers.Remove(driver);
             db.SaveChanges();
 
-            return Ok(driver);
+            return Ok();
         }
 
         protected override void Dispose(bool disposing)

@@ -60,7 +60,7 @@ namespace ridesnShare.Controllers
             //Establish url connection endpoint i.e client sends info and anticipates a response
             string url = "FindPassenger/"+id;
             HttpResponseMessage response = client.GetAsync(url).Result;
-            //this enables see if our httpclient is communicating with our data access endpoint 
+            //this enables me see if my httpclient is communicating with the data access endpoint 
 
             Debug.WriteLine("The response code is");
             Debug.WriteLine(response.StatusCode);

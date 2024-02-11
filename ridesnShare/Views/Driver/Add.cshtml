@@ -1,0 +1,21 @@
+﻿﻿
+@{
+    ViewBag.Title = "AddUser";
+}
+
+<h2>New Driver</h2>
+<!-- ask the admin for the passenger info-->
+<form action="/Driver/AddUser" method="POST">
+    <div>
+        <label>firstName:</label><input type="text" name="firstName" />
+    </div>
+    <div>
+        <label>lastName:</label><input type="text" name="lastName" />
+    </div>
+    <div>
+        <label>email:</label><input type="text" name="email" />
+    </div>
+    <div>
+        <input type="submit" value="Add Driver" />
+    </div>
+</form>
