@@ -72,7 +72,7 @@ namespace ridesnShare.Controllers
             return View(selecteddriver);
         }
 
-        // GET: Driver/Edit/5
+        // GET: Driver/Error/5
         public ActionResult Error(int id)
         {
             return View();

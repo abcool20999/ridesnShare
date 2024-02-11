@@ -45,17 +45,37 @@ namespace ridesnShare.Controllers
 
         }
 
-        // GET: api/TripData/5
+        /// <summary>
+        /// Retrieves information about a specific trip from the database.
+        /// </summary>
+        /// <param name="id">The ID of the trip to retrieve.</param>
+        /// <returns>
+        /// An IHttpActionResult containing information about the trip.
+        /// </returns>
+        /// <example>
+        /// GET: api/TripData/FindTrip/{id}
+        /// </example>
+
         [ResponseType(typeof(Trip))]
+        [HttpGet]
+        [Route("api/TripData/FindTrip/{id}")]
         public IHttpActionResult FindTrip(int id)
         {
             Trip trip = db.Trips.Find(id);
-            if (trip == null)
+            TripDTO passengerDTO = new PassengerDTO()
+            {
+                passengerId = passenger.passengerId,
+                firstName = passenger.firstName,
+                lastName = passenger.lastName,
+                email = passenger.email
+            };
+
+            if (passenger == null)
             {
                 return NotFound();
             }
 
-            return Ok(trip);
+            return Ok(passengerDTO);
         }
 
         // PUT: api/TripData/5
@@ -93,19 +113,29 @@ namespace ridesnShare.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/TripData
-        [ResponseType(typeof(Trip))]
-        public IHttpActionResult AddTrip(Trip trip)
+        /// <summary>
+        /// Adds a new passenger to the database.
+        /// </summary>
+        /// <param name="passenger">The passenger object containing information about the new passenger.</param>
+        /// <returns>
+        /// An IHttpActionResult indicating the result of the addition operation.
+        /// </returns>
+        /// <example>
+        /// POST: api/PassengerData/AddPassenger/5
+        /// </example>
+        [ResponseType(typeof(Passenger))]
+        [HttpPost]
+        public IHttpActionResult AddPassenger(Passenger passenger)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Trips.Add(trip);
+            db.Passengers.Add(passenger);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = trip.tripId }, trip);
+            return CreatedAtRoute("DefaultApi", new { id = passenger.passengerId }, passenger);
         }
 
         // DELETE: api/TripData/5
