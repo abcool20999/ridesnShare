@@ -78,8 +78,7 @@ namespace ridesnShare.Controllers
             return View();
         }
 
-        // POST: Trip/Add
-        [HttpPost]
+        // POST: Trip/Add       
         public ActionResult Add()
         {
            
@@ -89,7 +88,7 @@ namespace ridesnShare.Controllers
 
         // POST: Trip/AddTrip
         [HttpPost]
-        public ActionResult AddingTrip(Trip trip)
+        public ActionResult AddTrip(Trip trip)
         {
             Debug.WriteLine("the inputted trip name is :");
             Debug.WriteLine(trip.price);
