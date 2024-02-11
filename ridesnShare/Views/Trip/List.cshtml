@@ -1,0 +1,60 @@
+﻿<!--describing the view-->
+@model IEnumerable<ridesnShare.Models.TripDTO>
+@{
+    ViewBag.Title = "Trip";
+}
+
+
+
+<div class="sidebar">
+    <h2 class="sbc">RideShare</h2>
+    <div class="sbc"><a href="/Passenger/List">Passengers</a></div>
+    <div class="sbc"><a href="/Driver/List">Drivers</a></div>
+    <div class="sbc"><a href="">Bookings</a></div>
+</div>
+
+<div class="cnt">
+    <div>
+        <h2>List of Trips</h2>
+        <!--for each loop that determines the info we wanna render for the trips-->
+
+        <a href="/Passenger/Add">Add a Trip</a>
+
+
+        <form action="" method="GET">
+            <div>
+                <input class="input" type="text" name="PassengerSearchKey" />
+                <input class="submit" type="submit" value="Search" />
+            </div>
+        </form>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <td><b>startLocation</b></td>
+                <td><b>endLocation</b></td>
+                <td><b>price</b></td>
+                <td><b>time</b></td>
+                <td><b>dayOftheweek</b></td>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var trip in Model)
+            {
+                <tr>
+                    <td>@trip.startLocation</td>
+                    <td>@trip.endLocation</td>
+                    <td>@trip.price</td>
+                    <td>@trip.Time</td>
+                    <td>@trip.dayOftheweek</td>
+                    <td><a class="mbtn update" href="/Passenger/Edit/@trip.tripId">Update</a></td>
+                    <td><a class="mbtn delete" href="/Passenger/DeleteConfirm/@trip.tripId">Delete</a></td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+
+</div>
+

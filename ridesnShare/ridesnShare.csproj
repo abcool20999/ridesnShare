@@ -289,7 +289,7 @@
     <Content Include="Views\Passenger\List.cshtml" />
     <Content Include="Views\Booking\Booking.cshtml" />
     <Content Include="Views\Driver\List.cshtml" />
-    <Content Include="Views\Trip\Trip.cshtml" />
+    <Content Include="Views\Trip\List.cshtml" />
     <Content Include="Views\Passenger\Edit.cshtml" />
     <Content Include="Views\Passenger\Add.cshtml" />
     <Content Include="Views\Passenger\DeleteConfirm.cshtml" />
@@ -299,6 +299,7 @@
     <Content Include="Views\Driver\Details.cshtml" />
     <Content Include="Views\Driver\Edit.cshtml" />
     <Content Include="Views\Driver\DeleteConfirm.cshtml" />
+    <Content Include="Views\Driver\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

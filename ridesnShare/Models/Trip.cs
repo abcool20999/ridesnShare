@@ -28,7 +28,18 @@ namespace ridesnShare.Models
 
         //a driver has many trips
         public ICollection<Booking> Bookings { get; set; }
+    }
 
+    public class TripDTO
+    {
+        public int tripId { get; set; }
+        public string startLocation { get; set; }
+        public string endLocation { get; set; }
+        public string price { get; set; }
+
+        public DateTime Time { get; set; }
+
+        public string dayOftheweek { get;set; }
 
     }
 }

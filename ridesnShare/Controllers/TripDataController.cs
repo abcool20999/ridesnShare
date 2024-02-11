@@ -15,16 +15,39 @@ namespace ridesnShare.Controllers
     public class TripDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
-        // GET: api/TripData
-        public IQueryable<Trip> GetTrips()
+        /// <summary>
+        /// Retrieves a list of trips from the database.
+        /// </summary>
+        /// <returns>
+        /// An IEnumerable of TripDTO objects representing the list of trips.
+        /// </returns>
+        /// <example>
+        /// GET: api/TripData/ListTrips
+        /// </example>
+        [HttpGet]
+        [Route("api/TripData/ListTrips")]
+        public IEnumerable<TripDTO> Trips()
         {
-            return db.Trips;
+            List<Trip> Trips = db.Trips.ToList();
+            List<TripDTO> TripDTOs = new List<TripDTO>();
+
+            Trips.ForEach(t => TripDTOs.Add(new TripDTO()
+            {
+                tripId = t.tripId,
+                startLocation = t.startLocation,
+                endLocation = t.endLocation,
+                price = t.price,
+                Time = t.Time,
+                dayOftheweek = t.dayOftheweek
+            }));
+
+            return TripDTOs;
+
         }
 
         // GET: api/TripData/5
         [ResponseType(typeof(Trip))]
-        public IHttpActionResult GetTrip(int id)
+        public IHttpActionResult FindTrip(int id)
         {
             Trip trip = db.Trips.Find(id);
             if (trip == null)
@@ -37,7 +60,7 @@ namespace ridesnShare.Controllers
 
         // PUT: api/TripData/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutTrip(int id, Trip trip)
+        public IHttpActionResult UpdateTrip(int id, Trip trip)
         {
             if (!ModelState.IsValid)
             {
@@ -72,7 +95,7 @@ namespace ridesnShare.Controllers
 
         // POST: api/TripData
         [ResponseType(typeof(Trip))]
-        public IHttpActionResult PostTrip(Trip trip)
+        public IHttpActionResult AddTrip(Trip trip)
         {
             if (!ModelState.IsValid)
             {
