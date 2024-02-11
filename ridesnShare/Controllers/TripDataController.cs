@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -134,10 +135,21 @@ namespace ridesnShare.Controllers
                 return BadRequest(ModelState);
             }
 
+       
+            Driver driver = db.Drivers.Find(trip.DriverId);
+            
+            if( driver == null)
+            {
+                Debug.WriteLine("Driver doesn't exist");
+
+                return BadRequest();
+            }
+
+
             db.Trips.Add(trip);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = trip.tripId }, trip);
+            return Ok("Driver added");
         }
 
         // DELETE: api/TripData/5
