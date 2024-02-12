@@ -178,20 +178,32 @@ namespace ridesnShare.Controllers
             return Ok("Driver added");
         }
 
-        // DELETE: api/TripData/5
+        /// <summary>
+        /// Deletes a trip from the database.
+        /// </summary>
+        /// <param name="id">The ID of the trip to delete.</param>
+        /// <returns>
+        /// An IHttpActionResult indicating the result of the deletion operation.
+        /// </returns>
+        /// <example>
+        /// POST: api/TripData/DeleteTrip/5
+        /// </example>
+
         [ResponseType(typeof(Trip))]
-        public IHttpActionResult DeleteTrip(int id)
+        [HttpPost]
+        [Route("api/TripData/DeleteTrip/{id}")]
+        public IHttpActionResult DeleteTrip(int id) 
         {
-            Trip trip = db.Trips.Find(id);
-            if (trip == null)
+            Passenger passenger = db.Passengers.Find(id);
+            if (passenger == null)
             {
                 return NotFound();
             }
 
-            db.Trips.Remove(trip);
+            db.Passengers.Remove(passenger);
             db.SaveChanges();
 
-            return Ok(trip);
+            return Ok();
         }
 
         protected override void Dispose(bool disposing)

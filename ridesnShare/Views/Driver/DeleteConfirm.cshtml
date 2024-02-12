@@ -1,13 +1,17 @@
-﻿@model ridesnShare.Models.DriverDTO
+﻿@model ridesnShare.Models.TripDTO
 
 @{
     ViewBag.Title = "DeleteConfirm";
 }
 
-<h2>Are you sure you want to delete this driver</h2>
-<a href="/Driver/List">Cancel</a>
+<h2>Are you sure you want to delete this trip</h2>
+<a href="/Trip/List">Cancel</a>
 <h3>@Model.firstName</h3>
 <h3>@Model.lastName</h3>
 <form action="/Driver/Delete/@Model.DriverId" method="POST">
     <input type="submit" value="Confirm Delete" />
 </form>
+
+<h3>@Model.startLocation</h3>
+<h3>@Model.endLocation</h3>
+
