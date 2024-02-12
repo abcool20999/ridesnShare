@@ -192,6 +192,7 @@ namespace ridesnShare.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
+          
             string url = "DeleteTrip/" + id;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";

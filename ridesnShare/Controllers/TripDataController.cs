@@ -194,13 +194,13 @@ namespace ridesnShare.Controllers
         [Route("api/TripData/DeleteTrip/{id}")]
         public IHttpActionResult DeleteTrip(int id) 
         {
-            Passenger passenger = db.Passengers.Find(id);
-            if (passenger == null)
+            Trip trip = db.Trips.Find(id);
+            if (trip == null)
             {
                 return NotFound();
             }
 
-            db.Passengers.Remove(passenger);
+            db.Trips.Remove(trip);
             db.SaveChanges();
 
             return Ok();
