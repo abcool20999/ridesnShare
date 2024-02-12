@@ -70,8 +70,11 @@ namespace ridesnShare.Controllers
                 endLocation = trip.endLocation,
                 price = trip.price,
                 Time = trip.Time,
-                dayOftheweek= trip.dayOftheweek
+                dayOftheweek= trip.dayOftheweek,
+                DriverId = trip.DriverId
             };
+
+            Debug.WriteLine(tripDTO.DriverId + "---- from api");
 
             if (trip == null)
             {
@@ -81,19 +84,41 @@ namespace ridesnShare.Controllers
             return Ok(tripDTO);
         }
 
-        // PUT: api/TripData/5
+        /// <summary>
+        /// Updates information about a specific trip in the database.
+        /// </summary>
+        /// <param name="id">The ID of the trip to update.</param>
+        /// <param name="trip">The updated information of the trip.</param>
+        /// <returns>
+        /// An IHttpActionResult indicating the result of the update operation.
+        /// </returns>
+        /// <example>
+        /// POST: api/TripData/UpdateTrip/5
+        /// </example>
         [ResponseType(typeof(void))]
+        [HttpPost]
+        [Route("api/TripData/UpdateTrip/{id}")]
         public IHttpActionResult UpdateTrip(int id, Trip trip)
         {
             if (!ModelState.IsValid)
             {
+                Debug.WriteLine("Model State is invalid");
                 return BadRequest(ModelState);
             }
 
-            if (id != trip.tripId)
-            {
-                return BadRequest();
-            }
+            /*       if (id == default)
+                   {
+                       Debug.WriteLine("ID mismatch");
+                       Debug.WriteLine("GET parameter" + id);
+                       Debug.WriteLine("POST parameter" + trip.tripId);
+                       Debug.WriteLine("POST parameter" + trip.startLocation);
+                       Debug.WriteLine("POST parameter" + trip.endLocation);
+                       return BadRequest();
+                   } */
+
+            Debug.WriteLine(trip.startLocation + "-----");
+
+            Debug.WriteLine(trip.DriverId + "-----");
 
             db.Entry(trip).State = EntityState.Modified;
 
@@ -105,6 +130,7 @@ namespace ridesnShare.Controllers
             {
                 if (!TripExists(id))
                 {
+                    Debug.WriteLine("Passenger not found");
                     return NotFound();
                 }
                 else

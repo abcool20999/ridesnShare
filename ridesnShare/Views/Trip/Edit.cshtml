@@ -1,7 +1,38 @@
-﻿
+﻿@model ridesnShare.Models.TripDTO
+
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Update";
 }
 
-<h2>Edit</h2>
+<h2>Update Trip</h2>
 
+<form action="/Trip/Update" method="post">
+    <!-- Add a hidden input field for the id -->
+    <input type="hidden" name="id" value="@Model.tripId" />
+    <input type="hidden" name="DriverId" value="@Model.DriverId" />
+
+
+    <div>
+        <label for="startLocation">startLocation:</label>
+        <input type="text" id="startLocation" name="startLocation" value="@Model.startLocation" />
+    </div>
+    <div>
+        <label for="endLocation">endLocation:</label>
+        <input type="text" id="endLocation" name="endLocation" value="@Model.endLocation" />
+    </div>
+    <div>
+        <label for="price">price:</label>
+        <input type="text" id="price" name="price" value="@Model.price" />
+    </div>
+    <div>
+        <label for="Time">Time:</label>
+        <input type="text" id="Time" name="Time" value="@Model.Time" />
+    </div>
+    <div>
+        <label for="dayOftheweek">dayOftheweek:</label>
+        <input type="text" id="dayOftheweek" name="dayOftheweek" value="@Model.dayOftheweek" />
+    </div>
+    <div>
+        <input type="submit" value="Update Trip" />
+    </div>
+</form>

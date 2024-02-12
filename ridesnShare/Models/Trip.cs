@@ -37,6 +37,7 @@ namespace ridesnShare.Models
         public string endLocation { get; set; }
         public string price { get; set; }
 
+        public int DriverId { get; set; }
         public DateTime Time { get; set; }
 
         public string dayOftheweek { get;set; }

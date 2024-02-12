@@ -122,35 +122,59 @@ namespace ridesnShare.Controllers
             }
         }
 
-        // POST: Trip/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        // GET: Trip/Edit/5
+        public ActionResult Edit(int id)
         {
-            try
-            {
-                // TODO: Add update logic here
+            // Construct the URL to find the trip with the given ID
+            string url = "FindTrip/" + id;
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            // Send a GET request to retrieve the trip information from the API
+            HttpResponseMessage response = client.GetAsync(url).Result;
+
+            // Deserialize the response content into a TripDTO object
+            TripDTO selectedtrip = response.Content.ReadAsAsync<TripDTO>().Result;
+
+            // Return the View with the selected trip data
+            return View(selectedtrip);
         }
 
-        // POST: Trip/Edit/5
+        // POST: Trip/Update/5
         [HttpPost]
-        public ActionResult Update(int id, FormCollection collection)
+        public ActionResult Update(int id, Trip trip)
         {
-            try
-            {
-                // TODO: Add update logic here
+            // Set the trip ID to match the ID in the route
+            trip.tripId = id;
 
-                return RedirectToAction("Index");
-            }
-            catch
+            Debug.WriteLine(trip.DriverId + "----- in update controller");
+
+            // Construct the URL to update the trip with the given ID
+            string url = "UpdateTrip/" + id;
+
+            // Serialize the trip object into JSON payload
+            string jsonpayload = jss.Serialize(trip);
+
+            // Create HTTP content with JSON payload
+            HttpContent content = new StringContent(jsonpayload);
+
+            // Set the content type of the HTTP request to JSON
+            content.Headers.ContentType.MediaType = "application/json";
+
+            // Send a POST request to update the trip information
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            // Log the content of the request
+            Debug.WriteLine(content);
+
+            // Check if the request was successful
+            if (response.IsSuccessStatusCode)
             {
-                return View();
+                // Redirect to the List action if the update was successful
+                return RedirectToAction("List");
+            }
+            else
+            {
+                // Redirect to the Error action if there was an error during the update
+                return RedirectToAction("Error");
             }
         }
 
