@@ -296,7 +296,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Passenger\List.cshtml" />
-    <Content Include="Views\Booking\Booking.cshtml" />
+    <Content Include="Views\Booking\List.cshtml" />
     <Content Include="Views\Driver\List.cshtml" />
     <Content Include="Views\Trip\List.cshtml" />
     <Content Include="Views\Passenger\Edit.cshtml" />

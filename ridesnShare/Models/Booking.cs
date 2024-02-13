@@ -29,6 +29,20 @@ namespace ridesnShare.Models
         public virtual Trip Trip { get; set; }
 
     }
+
+    public class BookingDTO
+    {
+        public int bookingId { get; set; }
+        public int PassengerId { get; set; }
+        public int tripId { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string email { get; set; }
+        public int Age { get; set; }
+        public string CarType { get; set; }
+
+
+    }
 }
 
 
