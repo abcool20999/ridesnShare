@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using ridesnShare.DTOs.ResponseDTOs;
 using ridesnShare.Models;
 
 namespace ridesnShare.Controllers
@@ -72,6 +73,7 @@ namespace ridesnShare.Controllers
                 Time = trip.Time,
                 dayOftheweek= trip.dayOftheweek,
                 DriverId = trip.DriverId
+                
             };
 
             Debug.WriteLine(tripDTO.DriverId + "---- from api");
@@ -176,6 +178,33 @@ namespace ridesnShare.Controllers
             db.SaveChanges();
 
             return Ok("Driver added");
+        }
+        public List<AvailableTripsDTO> SearchForTrip(string location, string destination)
+        {
+            var trips = db.Trips.Include(t => t.Bookings).Where(t => t.startLocation == location
+                                        && t.endLocation == destination
+                                        //&& t.Time > DateTime.UtcNow
+                                        ).ToList();
+            var tripsinfo = new List<AvailableTripsDTO>();
+            Driver driver;
+            foreach (var trip in trips)
+            {
+                driver = db.Drivers.FirstOrDefault(d => d.DriverId == trip.DriverId);
+                tripsinfo.Add(new AvailableTripsDTO()
+                {
+                    DriverFirstName = driver.firstName,
+                    DriverLastname = driver.lastName,
+                    StartLocation = trip.startLocation,
+                    EndLocation = trip.endLocation,
+                    Price = trip.price,
+                    SpotsLeft = 4 - trip.Bookings.Count(),
+                    DriverAge = 45,
+                    CarType = "Toyota",
+                    Time = trip.Time,
+                    WeekDay = trip.dayOftheweek
+                });
+            }
+            return tripsinfo;
         }
 
         /// <summary>

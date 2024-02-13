@@ -192,6 +192,7 @@
     <Compile Include="Controllers\PassengerDataController.cs" />
     <Compile Include="Controllers\TripController.cs" />
     <Compile Include="Controllers\TripDataController.cs" />
+    <Compile Include="DTOs\ResponseDTOs\AvailableTripsDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -202,6 +203,10 @@
     <Compile Include="Migrations\202402050302082_rides.cs" />
     <Compile Include="Migrations\202402050302082_rides.designer.cs">
       <DependentUpon>202402050302082_rides.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402122259401_ride.cs" />
+    <Compile Include="Migrations\202402122259401_ride.designer.cs">
+      <DependentUpon>202402122259401_ride.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -305,6 +310,8 @@
     <Content Include="Views\Trip\Details.cshtml" />
     <Content Include="Views\Trip\Edit.cshtml" />
     <Content Include="Views\Trip\Error.cshtml" />
+    <Content Include="Views\Trip\AvailableTrips.cshtml" />
+    <Content Include="Views\Trip\SearchForTrip.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -342,6 +349,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202402050302082_rides.resx">
       <DependentUpon>202402050302082_rides.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402122259401_ride.resx">
+      <DependentUpon>202402122259401_ride.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

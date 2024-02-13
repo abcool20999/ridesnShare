@@ -15,6 +15,8 @@ namespace ridesnShare.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string email { get; set; }
+        public int Age { get; set; }
+        public string CarType { get; set; }
 
         //a driver has many trips
         public ICollection<Trip> Trips { get; set; }
@@ -26,6 +28,9 @@ namespace ridesnShare.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string email { get; set; }
+        public int Age { get; set; }
+        public string CarType { get; set; }
+
 
     }
 }

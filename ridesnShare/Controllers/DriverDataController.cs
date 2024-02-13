@@ -37,7 +37,9 @@ namespace ridesnShare.Controllers
                 DriverId = d.DriverId,
                 firstName = d.firstName,
                 lastName = d.lastName,
-                email = d.email
+                email = d.email,
+                Age = d.Age,
+                CarType = d.CarType
             }));
 
             return DriverDTOs;

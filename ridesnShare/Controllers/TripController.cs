@@ -14,7 +14,12 @@ namespace ridesnShare.Controllers
     {
         private static readonly HttpClient client;
         private JavaScriptSerializer jss = new JavaScriptSerializer();
+        private readonly TripDataController _tripdatacontroller;
 
+        public TripController()
+        {
+            _tripdatacontroller = new TripDataController();
+        }
         static TripController()
         {
             client = new HttpClient();
@@ -176,6 +181,23 @@ namespace ridesnShare.Controllers
                 // Redirect to the Error action if there was an error during the update
                 return RedirectToAction("Error");
             }
+        }
+
+        public ActionResult SearchForTrip()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SearchForTripPost(string location, string destination)
+        {
+            var availabletrips = _tripdatacontroller.SearchForTrip(location, destination);
+
+            if (availabletrips == default)
+            {
+                return View("AvailableTrips");
+            }
+
+            return View("AvailableTrips", availabletrips);
         }
 
         // GET: Trip/Delete/5
