@@ -198,8 +198,8 @@ namespace ridesnShare.Controllers
                     EndLocation = trip.endLocation,
                     Price = trip.price,
                     SpotsLeft = 4 - trip.Bookings.Count(),
-                    DriverAge = 45,
-                    CarType = "Toyota",
+                    DriverAge = driver.Age,
+                    CarType = driver.CarType??"Toyota",
                     Time = trip.Time,
                     WeekDay = trip.dayOftheweek
                 });
