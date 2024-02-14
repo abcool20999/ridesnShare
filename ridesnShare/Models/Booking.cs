@@ -35,10 +35,20 @@ namespace ridesnShare.Models
         public int bookingId { get; set; }
         public int PassengerId { get; set; }
         public int tripId { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
-        public string email { get; set; }
-        public int Age { get; set; }
+        public int DriverId { get; set; }   
+        public string passengerFirstName { get; set; }
+        public string passengerLastName { get; set; }
+        public string passengerEmail { get; set; }
+        public string driverFirstName {  get; set; }
+        public string driverLastName { get; set; }
+        public string driverEmail { get; set; }
+        public string startLocation {  get; set; }
+        public string endLocation { get; set; }
+        public string dayOftheweek { get; set; }
+
+        public DateTime Time { get; set; }
+
+        public string price { get; set; }
         public string CarType { get; set; }
 
 

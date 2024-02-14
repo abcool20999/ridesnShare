@@ -17,11 +17,7 @@
     <div>
         <h2>List of Bookings</h2>
         <!--for each loop that determines the info we wanna render for the bookings-->
-
-        <a href="/Trip/Add">Add a Trip</a>
-
-
-        <form action="" method="GET">
+ <form action="" method="GET">
             <div>
                 <input class="input" type="text" name="PassengerSearchKey" />
                 <input class="submit" type="submit" value="Search" />
@@ -31,27 +27,31 @@
     <table>
         <thead>
             <tr>
-                <td><b>driverFirstname</b></td>
-                <td><b>passengerLastname</b></td>
+                <td><b>passengerFirstname</b></td>
+                <td><b>driverLastname</b></td>
                 <td><b>startLocation</b></td>
                 <td><b>endLocation</b></td>
                 <td><b>price</b></td>
-                <td><b>time</b></td>
+                <td><b>Time</b></td>
                 <td><b>dayOftheweek</b></td>
+                <td><b>update</b></td>
+                <td><b>delete</b></td>
             </tr>
         </thead>
 
         <tbody>
-            @foreach (var trip in Model)
+            @foreach (var booking in Model)
             {
                 <tr>
-                    <td>@trip.startLocation</td>
-                    <td>@trip.endLocation</td>
-                    <td>@trip.price</td>
-                    <td>@trip.Time</td>
-                    <td>@trip.dayOftheweek</td>
-                    <td><a class="mbtn update" href="/Trip/Edit/@trip.tripId">Update</a></td>
-                    <td><a class="mbtn delete" href="/Trip/DeleteConfirm/@trip.tripId">Delete</a></td>
+                    <td>@booking.passengerFirstName</td>
+                    <td>@booking.driverLastName</td>
+                    <td>@booking.startLocation</td>
+                    <td>@booking.endLocation</td>
+                    <td>@booking.price</td>
+                    <td>@booking.Time</td>
+                    <td>@booking.dayOftheweek</td>
+                    <td><a class="mbtn update" href="/Booking/Edit/@booking.tripId">Update</a></td>
+                    <td><a class="mbtn delete" href="/Booking/DeleteConfirm/@booking.tripId">Delete</a></td>
                 </tr>
 
             }

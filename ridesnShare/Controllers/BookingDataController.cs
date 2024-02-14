@@ -16,23 +16,73 @@ namespace ridesnShare.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/BookingData
-        public IQueryable<Booking> GetBookings()
+        /// <summary>
+        /// Retrieves a list of bookings from the database.
+        /// </summary>
+        /// <returns>
+        /// An IEnumerable of BookingDTO objects representing the list of bookings.
+        /// </returns>
+        /// <example>
+        /// GET: api/BookingData/ListBookings
+        /// </example>
+        [HttpGet]
+        [Route("api/BookingData/ListBookings")]
+        public IEnumerable<BookingDTO> ListBookings()
         {
-            return db.Bookings;
-        }
+            List<Trip> trips = db.Trips.Include(t =>t.Driver).Include(d =>d.Bookings).ToList();
+            List<BookingDTO> BookingDTOs = new List<BookingDTO>();
+            foreach (Trip trip in trips)
+            {
+                foreach (Booking booking in trip.Bookings)
+                {
+                    var passenger = db.Passengers.FirstOrDefault(p =>p.passengerId == booking.PassengerId);
+                    BookingDTOs.Add(new BookingDTO()
+                    {
+                        passengerFirstName = passenger.firstName,
+                        driverFirstName = trip.Driver.firstName,
+                        startLocation = trip.startLocation,
+                        endLocation = trip.endLocation,
+                        price = trip.price,
+                        Time = trip.Time,
+                        dayOftheweek = trip.dayOftheweek
+                    });
+                }
+            }
 
-        // GET: api/BookingData/5
+            return BookingDTOs;
+
+        }
+        /// <summary>
+        /// Retrieves information about a specific booking from the database.
+        /// </summary>
+        /// <param name="id">The ID of the booking to retrieve.</param>
+        /// <returns>
+        /// An IHttpActionResult containing information about the booking.
+        /// </returns>
+        /// <example>
+        /// GET: api/BookingData/FindBooking/{id}
+        /// </example>
+
         [ResponseType(typeof(Booking))]
-        public IHttpActionResult GetBooking(int id)
+        [HttpGet]
+        [Route("api/PassengerData/FindPassenger/{id}")]
+        public IHttpActionResult FindPassenger(int id)
         {
-            Booking booking = db.Bookings.Find(id);
-            if (booking == null)
+            Passenger passenger = db.Passengers.Find(id);
+            PassengerDTO passengerDTO = new PassengerDTO()
+            {
+                passengerId = passenger.passengerId,
+                firstName = passenger.firstName,
+                lastName = passenger.lastName,
+                email = passenger.email
+            };
+
+            if (passenger == null)
             {
                 return NotFound();
             }
 
-            return Ok(booking);
+            return Ok(passengerDTO);
         }
 
         // PUT: api/BookingData/5
