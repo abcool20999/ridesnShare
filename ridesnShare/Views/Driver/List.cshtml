@@ -5,6 +5,7 @@
 }
 
 <div class="sidebar">
+    <!-- Sidebar section -->
     <h2 class="sbc">RideShare</h2>
     <div class="sbc"><a href="/Passenger/List">Passengers</a></div>
     <div class="sbc"><a href="/Driver/List">Drivers</a></div>
@@ -14,8 +15,9 @@
 
 <div class="cnt">
     <div>
+        <!-- Header section -->
         <h2>List of Drivers</h2>
-        <!--for each loop that determines the info we wanna render for the drivers-->
+        <!-- Form section for adding a driver -->
 
         <a href="/Driver/Add">Add a Driver</a>
 
@@ -27,8 +29,10 @@
             </div>
         </form>
     </div>
+    <!-- Table section displaying driver information -->
     <table>
         <thead>
+            <!-- Table header -->
             <tr>
                 <td><b>FirstName</b></td>
                 <td><b>LastName</b></td>
@@ -40,6 +44,7 @@
         </thead>
 
         <tbody>
+            <!-- Loop through each driver and display their information -->
             @foreach (var driver in Model)
             {
                 <tr>

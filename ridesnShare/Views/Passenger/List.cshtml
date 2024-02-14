@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "List";
 }
-
+<!--Side bar-->
 <div class="sidebar">
     <h2 class="sbc">RideShare</h2>
     <div class="sbc"><a href="">Passengers</a></div>
@@ -13,8 +13,9 @@
 
 <div class="cnt">
     <div>
+        <!-- Header section -->
         <h2>List of Passengers</h2>
-        <!--for each loop that determines the info we wanna render for the passengers-->
+        <!-- Form section for searching passengers -->
 
         <a href="/Passenger/Add">Add a Passenger</a>
 
@@ -26,8 +27,10 @@
             </div>
         </form>
     </div>
+    <!-- Table section displaying passenger information -->
     <table>
         <thead>
+            <!-- Table header -->
             <tr>
                 <td><b>FirstName</b></td>
                 <td><b>LastName</b></td>
@@ -38,6 +41,7 @@
         </thead>
 
         <tbody>
+            <!-- Loop through each passenger and display their information -->
             @foreach (var passenger in Model)
             {
                 <tr>

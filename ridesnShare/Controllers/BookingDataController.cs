@@ -65,24 +65,27 @@ namespace ridesnShare.Controllers
 
         [ResponseType(typeof(Booking))]
         [HttpGet]
-        [Route("api/PassengerData/FindPassenger/{id}")]
-        public IHttpActionResult FindPassenger(int id)
+        [Route("api/BookingData/FindBooking/{id}")]
+        public IHttpActionResult FindBooking(int id)
         {
-            Passenger passenger = db.Passengers.Find(id);
-            PassengerDTO passengerDTO = new PassengerDTO()
+            Booking booking = db.Bookings.Find(id);
+            BookingDTO bookingDTO = new BookingDTO()
             {
-                passengerId = passenger.passengerId,
-                firstName = passenger.firstName,
-                lastName = passenger.lastName,
-                email = passenger.email
+                passengerFirstName = booking.Passenger.firstName,
+                driverFirstName = booking.Trip.Driver.firstName,
+                startLocation = booking.Trip.startLocation,
+                endLocation = booking.Trip.endLocation,
+                price = booking.Trip.price,
+                Time = booking.Trip.Time,
+                dayOftheweek = booking.Trip.dayOftheweek
             };
 
-            if (passenger == null)
+            if (booking == null)
             {
                 return NotFound();
             }
 
-            return Ok(passengerDTO);
+            return Ok(bookingDTO);
         }
 
         // PUT: api/BookingData/5

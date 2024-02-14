@@ -5,9 +5,10 @@
 }
 
 
-
+<!-- Sidebar -->
 <div class="sidebar">
     <h2 class="sbc">RideShare</h2>
+    <!-- Navigation links -->
     <div class="sbc"><a href="/Passenger/List">Passengers</a></div>
     <div class="sbc"><a href="/Driver/List">Drivers</a></div>
     <div class="sbc"><a href="">Bookings</a></div>
@@ -15,12 +16,13 @@
 
 <div class="cnt">
     <div>
+        <!-- Header -->
         <h2>List of Trips</h2>
         <!--for each loop that determines the info we wanna render for the trips-->
-
+        <!-- Link to add a new trip -->
         <a href="/Trip/Add">Add a Trip</a>
 
-
+        <!-- Search form -->
         <form action="" method="GET">
             <div>
                 <input class="input" type="text" name="PassengerSearchKey" />
@@ -28,6 +30,7 @@
             </div>
         </form>
     </div>
+    <!-- Trips table -->
     <table>
         <thead>
             <tr>
@@ -43,6 +46,7 @@
             @foreach (var trip in Model)
             {
                 <tr>
+                    <!-- Display trip details -->
                     <td>@trip.startLocation</td>
                     <td>@trip.endLocation</td>
                     <td>@trip.price</td>

@@ -179,6 +179,14 @@ namespace ridesnShare.Controllers
 
             return Ok("Driver added");
         }
+        /// <summary>
+        /// Searches for trips based on the provided location and destination.
+        /// </summary>
+        /// <param name="location">The starting location of the trip.</param>
+        /// <param name="destination">The destination of the trip.</param>
+        /// <returns>
+        /// A list of available trips that match the search criteria.
+        /// </returns>
         public List<AvailableTripsDTO> SearchForTrip(string location, string destination)
         {
             var trips = db.Trips.Include(t => t.Bookings).Where(t => t.startLocation == location

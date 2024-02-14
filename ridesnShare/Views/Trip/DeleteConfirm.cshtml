@@ -2,14 +2,20 @@
 @{
     ViewBag.Title = "DeleteConfirm";
 }
-
+<!-- Confirmation message -->
 <h2>Are you sure you want to delete this trip</h2>
+
+<!-- Cancel button -->
 <a href="/Trip/List">Cancel</a>
+
+<!-- Display trip details -->
 <h3>@Model.startLocation</h3>
 <h3>@Model.endLocation</h3>
 <h3>@Model.price</h3>
 <h3>@Model.Time</h3>
 <h3>@Model.dayOftheweek</h3>
+
+<!-- Form for confirming deletion -->
 <form action="/Trip/Delete/@Model.tripId" method="POST">
     <input type="submit" value="Confirm Delete" />
 </form>
