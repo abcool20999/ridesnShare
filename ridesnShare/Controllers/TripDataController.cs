@@ -71,9 +71,9 @@ namespace ridesnShare.Controllers
                 endLocation = trip.endLocation,
                 price = trip.price,
                 Time = trip.Time,
-                dayOftheweek= trip.dayOftheweek,
+                dayOftheweek = trip.dayOftheweek,
                 DriverId = trip.DriverId
-                
+
             };
 
             Debug.WriteLine(tripDTO.DriverId + "---- from api");
@@ -163,10 +163,10 @@ namespace ridesnShare.Controllers
                 return BadRequest(ModelState);
             }
 
-       
+
             Driver driver = db.Drivers.Find(trip.DriverId);
-            
-            if( driver == null)
+
+            if (driver == null)
             {
                 Debug.WriteLine("Driver doesn't exist");
 
@@ -192,6 +192,7 @@ namespace ridesnShare.Controllers
                 driver = db.Drivers.FirstOrDefault(d => d.DriverId == trip.DriverId);
                 tripsinfo.Add(new AvailableTripsDTO()
                 {
+                    TripId = trip.tripId,
                     DriverFirstName = driver.firstName,
                     DriverLastname = driver.lastName,
                     StartLocation = trip.startLocation,
@@ -199,7 +200,7 @@ namespace ridesnShare.Controllers
                     Price = trip.price,
                     SpotsLeft = 4 - trip.Bookings.Count(),
                     DriverAge = driver.Age,
-                    CarType = driver.CarType??"Toyota",
+                    CarType = driver.CarType ?? "Toyota",
                     Time = trip.Time,
                     WeekDay = trip.dayOftheweek
                 });
@@ -221,7 +222,7 @@ namespace ridesnShare.Controllers
         [ResponseType(typeof(Trip))]
         [HttpPost]
         [Route("api/TripData/DeleteTrip/{id}")]
-        public IHttpActionResult DeleteTrip(int id) 
+        public IHttpActionResult DeleteTrip(int id)
         {
             Trip trip = db.Trips.Find(id);
             if (trip == null)

@@ -45,7 +45,7 @@
                     <td>@passenger.lastName</td>
                     <td><a class="mbtn update" href="/Passenger/Edit/@passenger.passengerId">Update</a></td>
                     <td><a class="mbtn delete" href="/Passenger/DeleteConfirm/@passenger.passengerId">Delete</a></td>
-                    <td><a class="mbtn bg-dark bg-opacity-10" href="/Trip/SearchForTrip">Book a Trip</a></td>
+                    <td><a class="mbtn bg-dark bg-opacity-10" href="/Trip/SearchForTrip/@passenger.passengerId">Book a Trip</a></td>
                 </tr>
 
             }
@@ -53,4 +53,3 @@
     </table>
 
 </div>
-

@@ -1,9 +1,9 @@
-﻿
-@model IEnumerable<ridesnShare.DTOs.ResponseDTOs.AvailableTripsDTO>
+﻿@model IEnumerable<ridesnShare.DTOs.ResponseDTOs.AvailableTripsDTO>
 
 @{
     ViewBag.Title = "Available Trips";
 }
+
 <div class="d-flex flex-column">
     @foreach (var tripinfo in Model)
     {
@@ -60,9 +60,18 @@
                 <div>
                     @(tripinfo.SpotsLeft==0? "FULL":$"{tripinfo.SpotsLeft} Spots Left")
                 </div>
-                @*<div>
-                        @tripinfo.CarType
-                    </div>*@
+                <div>
+                    <form action="/Booking/CreateBooking" method="post">
+                        <input type="hidden" name="passengerId" value="@ViewBag.passengerId" />
+                        <input type="hidden" name="tripId" value="@tripinfo.TripId" />
+                        @if (@tripinfo.SpotsLeft > 0)
+                        {
+                            <input type="submit" value="Book" class="btn bg-success" />
+                        }
+                        
+                    </form>
+
+                </div>
             </div>
         </div>
     }

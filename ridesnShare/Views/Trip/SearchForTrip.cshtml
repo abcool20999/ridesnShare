@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Trip";
+
 }
 
 <h1 class="pb-3">RideAndShare</h1>
@@ -9,7 +10,7 @@
 
 <div class="bg-light p-2">
     <p><b>Enter your pickup and drop off location</b></p>
-    <form action="SearchForTripPost" method="post" class="d-flex flex-row justify-content-between w-100 pt-1 pb-1">
+    <form action="/Trip/SearchForTripPost/@ViewBag.passengerId" method="post" class="d-flex flex-row justify-content-between w-100 pt-1 pb-1">
         <div class="w-25">
             <select class="w-100 align-middle" name="location">
                 <svg width="301" height="50" viewBox="0 0 301 50" fill="none" xmlns="http://www.w3.org/2000/svg">

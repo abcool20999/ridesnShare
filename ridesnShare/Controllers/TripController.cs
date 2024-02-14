@@ -86,9 +86,9 @@ namespace ridesnShare.Controllers
         // POST: Trip/Add       
         public ActionResult Add()
         {
-           
+
             return View();
-          
+
         }
 
         // POST: Trip/AddTrip
@@ -183,12 +183,14 @@ namespace ridesnShare.Controllers
             }
         }
 
-        public ActionResult SearchForTrip()
+        public ActionResult SearchForTrip(int id)
         {
+            ViewBag.passengerId = id;
+
             return View();
         }
         [HttpPost]
-        public ActionResult SearchForTripPost(string location, string destination)
+        public ActionResult SearchForTripPost(int id, string location, string destination)
         {
             var availabletrips = _tripdatacontroller.SearchForTrip(location, destination);
 
@@ -196,6 +198,8 @@ namespace ridesnShare.Controllers
             {
                 return View("AvailableTrips");
             }
+
+            ViewBag.passengerId = id;
 
             return View("AvailableTrips", availabletrips);
         }
@@ -214,7 +218,7 @@ namespace ridesnShare.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-          
+
             string url = "DeleteTrip/" + id;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";

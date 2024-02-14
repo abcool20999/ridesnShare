@@ -10,7 +10,7 @@
     <h2 class="sbc">RideShare</h2>
     <div class="sbc"><a href="/Passenger/List">Passengers</a></div>
     <div class="sbc"><a href="/Driver/List">Drivers</a></div>
-    <div class="sbc"><a href="">Bookings</a></div>
+    <div class="sbc"><a href="/Booking/List">Bookings</a></div>
 </div>
 
 <div class="cnt">
@@ -28,7 +28,7 @@
         <thead>
             <tr>
                 <td><b>passengerFirstname</b></td>
-                <td><b>driverLastname</b></td>
+                <td><b>driverFirstname</b></td>
                 <td><b>startLocation</b></td>
                 <td><b>endLocation</b></td>
                 <td><b>price</b></td>
@@ -44,7 +44,7 @@
             {
                 <tr>
                     <td>@booking.passengerFirstName</td>
-                    <td>@booking.driverLastName</td>
+                    <td>@booking.driverFirstName</td>
                     <td>@booking.startLocation</td>
                     <td>@booking.endLocation</td>
                     <td>@booking.price</td>

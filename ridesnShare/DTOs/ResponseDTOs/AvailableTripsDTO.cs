@@ -7,6 +7,7 @@ namespace ridesnShare.DTOs.ResponseDTOs
 {
     public class AvailableTripsDTO
     {
+        public int TripId { get; set; }
         public string DriverFirstName { get; set; }
         public string DriverLastname { get; set; }
         public string StartLocation { get; set; }
