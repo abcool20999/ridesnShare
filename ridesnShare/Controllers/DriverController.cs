@@ -208,11 +208,57 @@ namespace ridesnShare.Controllers
 
             // GET: Driver/DriverLogin/
         
-            public ActionResult DriverLogin(Driver driver)
+
+        }
+
+
+        // using post method here because we passing username and password
+        // POST: User/ValidateUser
+
+        public ActionResult DriverLogin(Driver driver)
+        {
+            Debug.WriteLine(driver.username);
+            Debug.WriteLine(driver.password);
+
+            string url = "Validate";
+            string jsonpayload = jss.Serialize(driver);
+            HttpContent content = new StringContent(jsonpayload);
+            content.Headers.ContentType.MediaType = "application/json";
+
+            try
             {
-               return View("DriverLogin");
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Driver resUser = response.Content.ReadAsAsync<Driver>().Result;
+
+                    Session.Clear();
+                    Session["userId"] = resUser;
+
+                    return RedirectToAction("List", "Driver");
+                }
+                else
+                {
+                    Debug.WriteLine("Unsuccessful login attempt.");
+                    return RedirectToAction("Index", "Home"); // Redirect to home page if login fails
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception details
+                Debug.WriteLine("An error occurred during login: " + ex.Message);
+                // Redirect to an error page or handle the error appropriately
+                return RedirectToAction("Error", "Driver");
             }
         }
+
+
+
+        //public ActionResult DriverLogin()
+        //{
+        //    return View("DriverLogin");
+        //}
     }
 }
 

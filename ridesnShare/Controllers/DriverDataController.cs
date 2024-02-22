@@ -185,6 +185,41 @@ namespace ridesnShare.Controllers
             return Ok();
         }
 
+        // to validate username and password
+        [HttpPost]
+        [Route("api/DriverData/Validate")]
+        public IHttpActionResult Validate(Driver driver)
+        {
+            Debug.WriteLine(driver.username);
+            Debug.WriteLine(driver.password);
+
+            // returns true or false if user exist or not
+
+            bool isUserExist = (db.Drivers.Where(d => d.username == driver.username)
+                                   .FirstOrDefault() == null) ? false : true;
+
+            // Debug.WriteLine(isUserExist + "isUserExists");
+
+            if (isUserExist)
+            {
+                // validate user
+                Driver validatedDriver = db.Drivers.Where(d => d.username == d.username)
+                                               .Where(d => d.password == d.password).FirstOrDefault();
+                if (validatedDriver != null)
+                {
+                    return Ok(validatedDriver);
+
+                }
+
+                return BadRequest("Wrong password");
+
+            }
+            else
+            {
+                // return with a message
+                return BadRequest("User not found");
+            }
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
