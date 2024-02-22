@@ -79,12 +79,12 @@ namespace ridesnShare.Controllers
         }
 
         // POST: Driver/Add
-    
+
         public ActionResult Add()
         {
-            
-          return View();
-            
+
+            return View();
+
         }
 
         // POST: Driver/AddUser
@@ -205,6 +205,14 @@ namespace ridesnShare.Controllers
             {
                 return RedirectToAction("Error");
             }
+
+            // GET: Driver/DriverLogin/
+        
+            public ActionResult DriverLogin(Driver driver)
+            {
+               return View("DriverLogin");
+            }
         }
     }
 }
+

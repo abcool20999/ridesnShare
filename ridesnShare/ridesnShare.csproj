@@ -316,6 +316,8 @@
     <Content Include="Views\Trip\Error.cshtml" />
     <Content Include="Views\Trip\AvailableTrips.cshtml" />
     <Content Include="Views\Trip\SearchForTrip.cshtml" />
+    <Content Include="Views\Driver\DriverLogin.cshtml" />
+    <Content Include="Views\Passenger\PassengerLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
