@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -38,13 +39,13 @@ namespace ridesnShare.Controllers
                     var passenger = db.Passengers.FirstOrDefault(p =>p.passengerId == booking.PassengerId);
                     BookingDTOs.Add(new BookingDTO()
                     {
-                        passengerFirstName = passenger.firstName,
-                        driverFirstName = trip.Driver.firstName,
-                        startLocation = trip.startLocation,
-                        endLocation = trip.endLocation,
-                        price = trip.price,
-                        Time = trip.Time,
-                        dayOftheweek = trip.dayOftheweek
+                        passengerFirstName = booking.Passenger.firstName,
+                        driverFirstName = booking.Trip.Driver.firstName,
+                        startLocation = booking.Trip.startLocation,
+                        endLocation = booking.Trip.endLocation,
+                        price = booking.Trip.price,
+                        Time = booking.Trip.Time,
+                        dayOftheweek = booking.Trip.dayOftheweek
                     });
                 }
             }
@@ -88,17 +89,35 @@ namespace ridesnShare.Controllers
             return Ok(bookingDTO);
         }
 
-        // PUT: api/BookingData/5
+        /// <summary>
+        /// Updates information about a specific passengerbooking in the database.
+        /// </summary>
+        /// <param name="id">The ID of the passengerbooking to update.</param>
+        /// <param name="passengerbooking">The updated information of the passengerbooking.</param>
+        /// <returns>
+        /// An IHttpActionResult indicating the result of the update operation.
+        /// </returns>
+        /// <example>
+        /// POST: api/BookingData/UpdateBooking/5
+        /// </example>
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutBooking(int id, Booking booking)
+        [HttpPost]
+        [Route("api/BookingData/UpdateBooking/{id}")]
+        public IHttpActionResult UpdateBooking(int id, Booking booking)
         {
             if (!ModelState.IsValid)
             {
+                Debug.WriteLine("Model State is invalid");
                 return BadRequest(ModelState);
             }
 
-            if (id != booking.bookingId)
+            if (id == default)
             {
+                Debug.WriteLine("ID mismatch");
+                Debug.WriteLine("GET parameter" + id);
+                Debug.WriteLine("POST parameter" + booking.Trip.Time);
+                Debug.WriteLine("POST parameter" + booking.Trip.dayOftheweek);
+                Debug.WriteLine("POST parameter" + booking.Trip.endLocation);
                 return BadRequest();
             }
 
@@ -112,6 +131,7 @@ namespace ridesnShare.Controllers
             {
                 if (!BookingExists(id))
                 {
+                    Debug.WriteLine("Booking not found");
                     return NotFound();
                 }
                 else
@@ -138,8 +158,20 @@ namespace ridesnShare.Controllers
             return CreatedAtRoute("DefaultApi", new { id = booking.bookingId }, booking);
         }
 
-        // DELETE: api/BookingData/5
+        /// <summary>
+        /// Deletes a booking from the database.
+        /// </summary>
+        /// <param name="id">The ID of the booking to delete.</param>
+        /// <returns>
+        /// An IHttpActionResult indicating the result of the deletion operation.
+        /// </returns>
+        /// <example>
+        /// POST: api/BookingData/DeleteBooking/5
+        /// </example>
+
         [ResponseType(typeof(Booking))]
+        [HttpPost]
+        [Route("api/BookingData/DeleteBooking/{id}")]
         public IHttpActionResult DeleteBooking(int id)
         {
             Booking booking = db.Bookings.Find(id);
@@ -151,7 +183,7 @@ namespace ridesnShare.Controllers
             db.Bookings.Remove(booking);
             db.SaveChanges();
 
-            return Ok(booking);
+            return Ok();
         }
 
         protected override void Dispose(bool disposing)

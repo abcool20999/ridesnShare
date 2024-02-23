@@ -56,32 +56,84 @@ namespace ridesnShare.Controllers
             return View(bookings);
         }
 
-
-        // GET: Booking/Details/5
+        // GET: Booking/Details/1
         public ActionResult Details(int id)
         {
-            return View();
+            //objective is to communicate with my Booking data api to retrieve one passenger booking.
+            //curl https://localhost:44354/api/BookingData/FindBooking/id
+
+
+            //Establish url connection endpoint i.e client sends info and anticipates a response
+            string url = "FindBooking/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            //this enables me see if my httpclient is communicating with the data access endpoint 
+
+            Debug.WriteLine("The response code is");
+            Debug.WriteLine(response.StatusCode);
+
+            //objective is to parse the content of the response message into an object of type booking.
+            BookingDTO selectedbooking = response.Content.ReadAsAsync<BookingDTO>().Result;
+
+            //we use debug.writeline to test and see if its working
+            Debug.WriteLine("booking received");
+            Debug.WriteLine(selectedbooking.passengerFirstName);
+            //this shows the channel of comm btwn our webserver in our booking controller and the actual booking data controller api as we are communicating through an http request
+
+            return View(selectedbooking);
         }
 
-        // GET: Booking/Create
-        public ActionResult Create()
+        
+        // GET: Booking/Edit/1
+        public ActionResult Edit(int id)
         {
-            return View();
+            // Construct the URL to find the passengerbooking with the given ID
+            string url = "FindBooking/" + id;
+
+            // Send a GET request to retrieve the passenger booking information from the API
+            HttpResponseMessage response = client.GetAsync(url).Result;
+
+            // Deserialize the response content into a BookingDTO object
+            BookingDTO selectedbooking = response.Content.ReadAsAsync<BookingDTO>().Result;
+
+            // Return the View with the selected booking data
+            return View(selectedbooking);
         }
 
-        // POST: Booking/Create
+        // POST: Booking/Update/1
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Update(int id, Booking booking)
         {
-            try
-            {
-                // TODO: Add insert logic here
+            // Set the booking ID to match the ID in the route
+            booking.bookingId = id;
 
-                return RedirectToAction("Index");
-            }
-            catch
+            // Construct the URL to update the passenger booking with the given ID
+            string url = "UpdateBooking/" + id;
+
+            // Serialize the passenger booking object into JSON payload
+            string jsonpayload = jss.Serialize(booking);
+
+            // Create HTTP content with JSON payload
+            HttpContent content = new StringContent(jsonpayload);
+
+            // Set the content type of the HTTP request to JSON
+            content.Headers.ContentType.MediaType = "application/json";
+
+            // Send a POST request to update the booking information
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            // Log the content of the request
+            Debug.WriteLine(content);
+
+            // Check if the request was successful
+            if (response.IsSuccessStatusCode)
             {
-                return View();
+                // Redirect to the List action if the update was successful
+                return RedirectToAction("List");
+            }
+            else
+            {
+                // Redirect to the Error action if there was an error during the update
+                return RedirectToAction("Error");
             }
         }
 
@@ -101,7 +153,7 @@ namespace ridesnShare.Controllers
             }
         }
         // GET: Booking/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edits(int id)
         {
             return View();
         }

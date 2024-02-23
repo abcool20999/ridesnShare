@@ -1,0 +1,44 @@
+﻿@model ridesnShare.Models.BookingDTO
+
+@{
+    ViewBag.Title = "Update";
+}
+<!--This form helps passengers update their booking-->
+<h2>Update Booking</h2>
+
+<form action="/Booking/Update" method="POST">
+    <!--Add a hidden input field for the id-->
+    <input type="hidden" name="id" value="@Model.bookingId." />
+
+    <div>
+        <label for="passengerfirstName">passengerfirstName:</label>
+        <input type="text" id="passengerfirstName" name="passengerfirstName" value="@Model.passengerFirstName" />
+    </div>
+    <div>
+        <label for="driverfirstName">driverfirstName:</label>
+        <input type="text" id="driverfirstName" name="driverfirstName" value="@Model.driverFirstName" />
+    </div>
+    <div>
+        <label for="startLocation">startLocation:</label>
+        <input type="text" id="startLocation" name="startLocation" value="@Model.startLocation" />
+    </div>
+    <div>
+        <label for="endLocation">endLocation:</label>
+        <input type="text" id="endLocation" name="endLocation" value="@Model.endLocation" />
+    </div>
+    <div>
+        <label for="price">price:</label>
+        <input type="text" id="price" name="price" value="@Model.price" />
+    </div>
+    <div>
+        <label for="time">time:</label>
+        <input type="text" id="time" name="time" value="@Model.Time" />
+    </div>
+    <div>
+        <label for="dayOftheweek">dayOftheweek:</label>
+        <input type="text" id="dayOftheweek" name="dayOftheweek" value="@Model.dayOftheweek" />
+    </div>
+    <div>
+        <input type="submit" value="Update Booking" />
+    </div>
+</form>
