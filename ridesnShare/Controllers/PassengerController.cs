@@ -204,6 +204,49 @@ namespace ridesnShare.Controllers
             {
                 return RedirectToAction("Error");
             }
+         
         }
+        public ActionResult PassengerLogin()
+        {
+            return View("PassengerLogin");
+        }
+        public ActionResult PassengerLoginSubmit(Passenger passenger)
+        {
+            Debug.WriteLine(passenger.username);
+            Debug.WriteLine(passenger.password);
+
+            string url = "Validate";
+            string jsonpayload = jss.Serialize(passenger);
+            HttpContent content = new StringContent(jsonpayload);
+            content.Headers.ContentType.MediaType = "application/json";
+
+            try
+            {
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Passenger resUser = response.Content.ReadAsAsync<Passenger>().Result;
+
+                    Session.Clear();
+                    Session["userId"] = resUser;
+                    var action =$"SearchForTrip/{resUser.passengerId}";
+                    return RedirectToAction(action, "Trip");
+                }
+                else
+                {
+                    Debug.WriteLine("Unsuccessful login attempt.");
+                    return RedirectToAction("Index", "Home"); // Redirect to home page if login fails
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception details
+                Debug.WriteLine("An error occurred during login: " + ex.Message);
+                // Redirect to an error page or handle the error appropriately
+                return RedirectToAction("Error", "Driver");
+            }
+        }
+
     }
 }

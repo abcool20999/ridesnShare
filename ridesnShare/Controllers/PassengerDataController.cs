@@ -181,6 +181,41 @@ namespace ridesnShare.Controllers
             return Ok();
         }
 
+        // to validate username and password
+        [HttpPost]
+        [Route("api/PassengerData/Validate")]
+        public IHttpActionResult Validate(Passenger passenger)
+        {
+            Debug.WriteLine(passenger.username);
+            Debug.WriteLine(passenger.password);
+
+            // returns true or false if user exist or not
+
+            bool isUserExist = (db.Passengers.Where(p => p.username == passenger.username)
+                                   .FirstOrDefault() == null) ? false : true;
+
+            // Debug.WriteLine(isUserExist + "isUserExists");
+
+            if (isUserExist)
+            {
+                // validate user
+                Passenger validatedPassenger = db.Passengers.Where(p => p.username == p.username)
+                                               .Where(p => p.password == p.password).FirstOrDefault();
+                if (validatedPassenger != null)
+                {
+                    return Ok(validatedPassenger);
+
+                }
+
+                return BadRequest("Wrong password");
+
+            }
+            else
+            {
+                // return with a message
+                return BadRequest("User not found");
+            }
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

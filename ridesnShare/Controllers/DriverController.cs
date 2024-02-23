@@ -215,7 +215,7 @@ namespace ridesnShare.Controllers
         // using post method here because we passing username and password
         // POST: User/ValidateUser
 
-        public ActionResult DriverLogin(Driver driver)
+        public ActionResult DriverLoginSubmit(Driver driver)
         {
             Debug.WriteLine(driver.username);
             Debug.WriteLine(driver.password);
@@ -236,7 +236,7 @@ namespace ridesnShare.Controllers
                     Session.Clear();
                     Session["userId"] = resUser;
 
-                    return RedirectToAction("List", "Driver");
+                    return RedirectToAction("List", "Trip");
                 }
                 else
                 {
@@ -255,10 +255,10 @@ namespace ridesnShare.Controllers
 
 
 
-        //public ActionResult DriverLogin()
-        //{
-        //    return View("DriverLogin");
-        //}
+        public ActionResult DriverLogin()
+        {
+            return View("DriverLogin");
+        }
     }
 }
 
