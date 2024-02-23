@@ -39,6 +39,7 @@ namespace ridesnShare.Controllers
                     var passenger = db.Passengers.FirstOrDefault(p =>p.passengerId == booking.PassengerId);
                     BookingDTOs.Add(new BookingDTO()
                     {
+                        bookingId = booking.bookingId,
                         passengerFirstName = booking.Passenger.firstName,
                         driverFirstName = booking.Trip.Driver.firstName,
                         startLocation = booking.Trip.startLocation,
@@ -69,9 +70,13 @@ namespace ridesnShare.Controllers
         [Route("api/BookingData/FindBooking/{id}")]
         public IHttpActionResult FindBooking(int id)
         {
-            Booking booking = db.Bookings.Find(id);
+            Booking booking = db.Bookings.Include(b=>b.Trip).FirstOrDefault(b=>b.bookingId==id);
             BookingDTO bookingDTO = new BookingDTO()
             {
+                bookingId = booking.bookingId,
+                PassengerId = booking.PassengerId,
+                DriverId = booking.Trip.DriverId,
+                tripId = booking.tripId,
                 passengerFirstName = booking.Passenger.firstName,
                 driverFirstName = booking.Trip.Driver.firstName,
                 startLocation = booking.Trip.startLocation,
@@ -103,7 +108,7 @@ namespace ridesnShare.Controllers
         [ResponseType(typeof(void))]
         [HttpPost]
         [Route("api/BookingData/UpdateBooking/{id}")]
-        public IHttpActionResult UpdateBooking(int id, Booking booking)
+        public IHttpActionResult UpdateBooking(int id, BookingDTO bookingDTO)
         {
             if (!ModelState.IsValid)
             {
@@ -115,13 +120,29 @@ namespace ridesnShare.Controllers
             {
                 Debug.WriteLine("ID mismatch");
                 Debug.WriteLine("GET parameter" + id);
-                Debug.WriteLine("POST parameter" + booking.Trip.Time);
-                Debug.WriteLine("POST parameter" + booking.Trip.dayOftheweek);
-                Debug.WriteLine("POST parameter" + booking.Trip.endLocation);
+                Debug.WriteLine("POST parameter" + bookingDTO.Time);
+                Debug.WriteLine("POST parameter" + bookingDTO.dayOftheweek);
+                Debug.WriteLine("POST parameter" + bookingDTO.endLocation);
                 return BadRequest();
             }
+            var passenger = db.Passengers.FirstOrDefault(x => x.passengerId==bookingDTO.PassengerId);
+            var driver = db.Drivers.FirstOrDefault(x => x.DriverId == bookingDTO.DriverId);
+            var trip = db.Trips.FirstOrDefault(x => x.tripId == bookingDTO.tripId);
+            var booking = db.Bookings.FirstOrDefault(x => x.bookingId == bookingDTO.bookingId);
 
+            passenger.firstName=bookingDTO.passengerFirstName;
+            driver.firstName=bookingDTO.driverFirstName;
+            trip.startLocation=bookingDTO.startLocation;
+            trip.endLocation=bookingDTO.endLocation;
+            trip.price=bookingDTO.price;
+            trip.Time=bookingDTO.Time;
+            trip.dayOftheweek=bookingDTO.dayOftheweek;
+
+            db.Entry(passenger).State = EntityState.Modified;
+            db.Entry(driver).State = EntityState.Modified;
+            db.Entry(trip).State = EntityState.Modified;
             db.Entry(booking).State = EntityState.Modified;
+
 
             try
             {

@@ -6,9 +6,12 @@
 <!--This form helps passengers update their booking-->
 <h2>Update Booking</h2>
 
-<form action="/Booking/Update" method="POST">
+<form action="/Booking/Update/@Model.bookingId" method="POST">
     <!--Add a hidden input field for the id-->
-    <input type="hidden" name="id" value="@Model.bookingId." />
+    <input type="hidden" name="bookingId" value="@Model.bookingId" />
+    <input type="hidden" name="PassengerId" value="@Model.PassengerId" />
+    <input type="hidden" name="tripId" value="@Model.tripId" />
+    <input type="hidden" name="DriverId" value="@Model.DriverId" />
 
     <div>
         <label for="passengerfirstName">passengerfirstName:</label>

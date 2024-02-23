@@ -96,21 +96,32 @@ namespace ridesnShare.Controllers
             BookingDTO selectedbooking = response.Content.ReadAsAsync<BookingDTO>().Result;
 
             // Return the View with the selected booking data
-            return View(selectedbooking);
+            return View("EditBooking",selectedbooking);
+        }
+
+
+        // GET: Booking/Edit/1
+        public ActionResult EditBooking(BookingDTO bookingDTO)
+        {
+            
+
+            // Return the View with the selected booking data
+           return View(bookingDTO);
         }
 
         // POST: Booking/Update/1
         [HttpPost]
-        public ActionResult Update(int id, Booking booking)
+        public ActionResult Update(BookingDTO bookingDTO)
         {
+            int id = bookingDTO.bookingId;
             // Set the booking ID to match the ID in the route
-            booking.bookingId = id;
+           
 
             // Construct the URL to update the passenger booking with the given ID
             string url = "UpdateBooking/" + id;
 
             // Serialize the passenger booking object into JSON payload
-            string jsonpayload = jss.Serialize(booking);
+            string jsonpayload = jss.Serialize(bookingDTO);
 
             // Create HTTP content with JSON payload
             HttpContent content = new StringContent(jsonpayload);

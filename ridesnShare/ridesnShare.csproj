@@ -326,7 +326,7 @@
     <Content Include="Views\Trip\SearchForTrip.cshtml" />
     <Content Include="Views\Driver\DriverLogin.cshtml" />
     <Content Include="Views\Passenger\PassengerLogin.cshtml" />
-    <Content Include="Views\Booking\Edit.cshtml" />
+    <Content Include="Views\Booking\EditBooking.cshtml" />
     <Content Include="Views\Booking\DeleteConfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
