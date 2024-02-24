@@ -185,7 +185,7 @@ namespace ridesnShare.Controllers
             }
         }
 
-        // GET: Driver/Delete/5
+        // GET: Booking/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
             string url = "FindBooking/" + id;
@@ -195,7 +195,7 @@ namespace ridesnShare.Controllers
 
         }
 
-        // POST: Driver/Delete/5
+        // POST: Booking/Delete/5
         [HttpPost]
         public ActionResult Delete(int id)
         {

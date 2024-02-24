@@ -184,8 +184,18 @@ namespace ridesnShare.Controllers
 
             return Ok();
         }
+        /// <summary>
+        /// Validates a driver's credentials by checking if the user exists in the database and if the provided password matches.
+        /// </summary>
+        /// <param name="driver">The Driver object containing username and password for validation.</param>
+        /// <returns>
+        /// IHttpActionResult representing the result of the validation process:
+        ///   - If the user exists and the password matches, returns Ok with the validated Driver object.
+        ///   - If the user exists but the password does not match, returns BadRequest with a message indicating incorrect password.
+        ///   - If the user does not exist, returns BadRequest with a message indicating that the user was not found.
+        /// </returns>
+        /// <example></example>
 
-        // to validate username and password
         [HttpPost]
         [Route("api/DriverData/Validate")]
         public IHttpActionResult Validate(Driver driver)

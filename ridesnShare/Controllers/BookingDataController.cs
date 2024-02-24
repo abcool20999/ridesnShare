@@ -96,12 +96,16 @@ namespace ridesnShare.Controllers
         }
 
         /// <summary>
-        /// Updates information about a specific passengerbooking in the database.
+        /// Updates information about a specific booking in the database.
         /// </summary>
-        /// <param name="id">The ID of the passengerbooking to update.</param>
-        /// <param name="passengerbooking">The updated information of the passengerbooking.</param>
+        /// <param name="id">The ID of the booking to be updated.</param>
+        /// <param name="bookingDTO">The updated information of the booking.</param>
         /// <returns>
-        /// An IHttpActionResult indicating the result of the update operation.
+        /// An IHttpActionResult indicating the result of the update operation:
+        ///   - If the ModelState is not valid, returns BadRequest with ModelState errors.
+        ///   - If the provided ID is default, returns BadRequest indicating ID mismatch.
+        ///   - If the booking is successfully updated, returns NoContent status code.
+        ///   - If the booking is not found, returns NotFound status code.
         /// </returns>
         /// <example>
         /// POST: api/BookingData/UpdateBooking/5
