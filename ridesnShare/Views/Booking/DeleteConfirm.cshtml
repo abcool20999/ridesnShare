@@ -1,7 +1,22 @@
-﻿
+﻿@model ridesnShare.Models.BookingDTO
 @{
     ViewBag.Title = "DeleteConfirm";
+    
 }
+<!--Deletes a passenger from the database-->
+<h2>Are you sure you want to delete this passenger</h2>
+<a href="/Passenger/List">Cancel</a>
+<h3>@Model.passengerFirstName</h3>
+<h3>@Model.driverLastName</h3>
+<h3>@Model.startLocation</h3>
+<h3>@Model.endLocation</h3>
+<h3>@Model.price</h3>
+<h3>@Model.Time</h3>
+<h3>@Model.dayOftheweek</h3>
 
-<h2>DeleteConfirm</h2>
+<form action="/Booking/Delete/@Model.bookingId" method="POST">
+    <input type="submit" value="Confirm Delete" />
+</form>
 
+
+passengerFirstname	driverFirstname	startLocation	endLocation	price	Time	dayOftheweek

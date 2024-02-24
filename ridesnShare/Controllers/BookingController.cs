@@ -185,26 +185,34 @@ namespace ridesnShare.Controllers
             }
         }
 
-        // GET: Booking/Delete/5
-        public ActionResult Delete(int id)
+        // GET: Driver/Delete/5
+        public ActionResult DeleteConfirm(int id)
         {
-            return View();
+            string url = "FindDriver/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            DriverDTO selecteddriver = response.Content.ReadAsAsync<DriverDTO>().Result;
+            return View(selecteddriver);
+
         }
 
-        // POST: Booking/Delete/5
+        // POST: Driver/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            string url = "DeleteDriver/" + id;
+            HttpContent content = new StringContent("");
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
 
-                return RedirectToAction("Index");
-            }
-            catch
+            if (response.IsSuccessStatusCode)
             {
-                return View();
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("Error");
             }
         }
     }
+    
 }
