@@ -71,6 +71,10 @@ namespace ridesnShare.Controllers
         public IHttpActionResult FindBooking(int id)
         {
             Booking booking = db.Bookings.Include(b=>b.Trip).FirstOrDefault(b=>b.bookingId==id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
             BookingDTO bookingDTO = new BookingDTO()
             {
                 bookingId = booking.bookingId,
@@ -86,10 +90,7 @@ namespace ridesnShare.Controllers
                 dayOftheweek = booking.Trip.dayOftheweek
             };
 
-            if (booking == null)
-            {
-                return NotFound();
-            }
+ 
 
             return Ok(bookingDTO);
         }

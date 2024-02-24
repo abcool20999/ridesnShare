@@ -188,10 +188,10 @@ namespace ridesnShare.Controllers
         // GET: Driver/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
-            string url = "FindDriver/" + id;
+            string url = "FindBooking/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
-            DriverDTO selecteddriver = response.Content.ReadAsAsync<DriverDTO>().Result;
-            return View(selecteddriver);
+            BookingDTO selectedbooking = response.Content.ReadAsAsync<BookingDTO>().Result;
+            return View(selectedbooking);
 
         }
 
@@ -199,7 +199,7 @@ namespace ridesnShare.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            string url = "DeleteDriver/" + id;
+            string url = "DeleteBooking/" + id;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
